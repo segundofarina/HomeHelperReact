@@ -3,9 +3,9 @@ import Button from '../../UI/Button/Button'
 import Input from '../../UI/Input/Input'
 import Panel from '../../UI/Panel/Panel'
 
-const search = ()=>{
+const search = (props)=>{
     return (
-        <Panel>
+        <Panel className={props.className}>
             <Input inputType="input"
                 label="Zona:"
                 type="text"

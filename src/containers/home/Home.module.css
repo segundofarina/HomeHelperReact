@@ -1,0 +1,17 @@
+.MainContent{
+    width:50%;
+    left: 0;
+    padding-top: 150px;
+    padding-right: 15px;
+    padding-left: 15px;
+    text-align: center;
+}
+.MainContent h1{
+    font-size: 46px;
+}
+
+.Search{
+    width: 22em;
+    margin: auto;
+    margin-top: 3em;
+}
