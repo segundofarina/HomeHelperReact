@@ -1,0 +1,22 @@
+.button{
+    background-color: #26b99a;
+    width: 100%;
+    margin: auto;
+    color: #FFF;
+    font-weight: bold;
+    padding: 0.8em 0;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    border: 0;
+}
+
+.Primary{
+    background-color: #26b99a;
+
+}
+
+.Secondary{
+    background-color: #73879C;
+}
+
