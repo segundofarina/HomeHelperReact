@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import './App.css';
+import styles from './App.module.css';
+import Layout from './hoc/Layout/Layout';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-     </div>
+      <div className={styles.app}>
+        <Layout>
+          <p>Hola</p>
+        </Layout>
+      </div>
     );
   }
 }
