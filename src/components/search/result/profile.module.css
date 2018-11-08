@@ -12,9 +12,8 @@
     display: flex;
     padding:15px 30px;
     width: 80%;
+    margin:10px;
 }
-
-
 
 .Title{
     display: flex;
@@ -31,7 +30,10 @@
 }
 
 .Calification{
-    
+    text-align: center;
+    color: #afafaf;
+    font-style: italic;
+    font-size: 12px;
 }
 
 .ProfileHeader{
