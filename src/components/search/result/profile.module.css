@@ -1,0 +1,48 @@
+.Row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+.Col {
+    display: flex;
+    flex-direction: column;
+}
+.Panel{
+    display: flex;
+    padding:15px 30px;
+    width: 80%;
+}
+
+
+
+.Title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+}
+.ProfileImg {
+    /* margin: auto; */
+    max-width: 7em;
+    left: 0;
+    right: 0;
+}
+
+.Calification{
+    
+}
+
+.ProfileHeader{
+    display: flex;
+    align-items: center;
+}
+
+.ProfileImg img {
+    border-radius: 100%;
+    width: 7em;
+    height: 7em;
+    object-fit: cover;
+}
+

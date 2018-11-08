@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styles from './App.module.css'
 import Layout from './hoc/Layout/Layout'
 import Home from './containers/home/Home'
+import Search from './containers/search/Search'
 
 
 class App extends Component {
@@ -9,7 +10,7 @@ class App extends Component {
     return (
       <div className={styles.app}>
         <Layout>
-          <Home/>
+          <Search/>
         </Layout>
       </div>
     );
