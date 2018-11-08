@@ -1,13 +1,15 @@
 import React, {Component} from 'react'
 import Search from '../../components/Home/Search/Search'
 import style from './Home.module.css'
+import axios from 'axios'
 
 class Home extends Component {
 
     state = {
         location: '',
         serviceType: '',
-        serviceTypeOptions: [
+        serviceTypeOptions: []
+        /*serviceTypeOptions: [
             {
                 value: 'pintor',
                 name: 'Pintor',
@@ -16,10 +18,22 @@ class Home extends Component {
                 value: 'electricista',
                 name: 'Electricista',
             },
-        ],
+        ],*/
     }
 
     /* Get service type options from api */
+    async getServiceTypes () {
+        try {
+            const resp = await axios.get('/serviceTypes')
+            console.log(resp)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    componentDidMount() {
+        this.getServiceTypes()
+    }
 
     locationChangeHandler = (event) => {
         this.setState({location: event.target.value})

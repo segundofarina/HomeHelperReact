@@ -3,7 +3,7 @@
     margin-top: 50px;
     flex-grow: 1;
     flex-shrink: 0;
-    min-height: calc(100vh - 50px);
+    min-height: calc(100vh - 50px); /* browser size - navbar size */
 }
 
 @media (min-width: 768px) {
