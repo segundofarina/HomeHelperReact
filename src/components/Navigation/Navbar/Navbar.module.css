@@ -3,11 +3,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 65px;
+    height: 50px;
     width: 100%;
     padding-left: 50px;
     padding-right: 50px;
     border-bottom: 1px solid #e7e7e7;
+    position: fixed;
+    z-index: 100;
+    background-color: #fff;
 }
 
 .title {
@@ -19,15 +22,16 @@
 }
 
 .title h1 {
-    font-size: 30px;
+    font-size: 24px;
 }
 
 .title img {
     margin-right: 20px;
-    height: 2.6em;
+    height: 2em;
 }
 
 .button {
+    display: none;
     border-radius: 25px;
     background-color: #73879c;
     color: #fff;
@@ -43,4 +47,22 @@
     color: #73879c;
     background-color: #fff;
     border: 2px solid #73879c;
+}
+
+@media (min-width: 768px) {
+    .navBar {
+        height: 65px;
+    }
+
+    .title h1 {
+        font-size: 30px;
+    }
+
+    .title img {
+        height: 2.6em;
+    }
+
+    .button {
+        display: block;
+    }
 }

@@ -9,12 +9,18 @@ const search = (props)=>{
             <Input inputType="input"
                 label="Zona:"
                 type="text"
-                placeholder="Ingrese su direccion" />
-            <Input inputType="input"
+                placeholder="Ingrese su direccion"
+                onChange={props.onLocationChange}
+                value={props.locationValue} />
+            <Input inputType="select"
                 label="Tipo de Servicio:"
                 type="text"
-                placeholder="Seleccione un tipo de servicio" />
-            <Button>
+                placeholder="Seleccione un tipo de servicio"
+                onChange={props.onServiceTypeChange}
+                value={props.serviceTypeValue}
+                defaultValue={props.serviceTypeDefault}
+                options={props.serviceTypeOptions} />
+            <Button onClick={props.onSubmitSearch}>
                 Buscar
             </Button>
         </Panel>

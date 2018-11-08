@@ -10,4 +10,5 @@
     justify-content: flex-end;
     align-items: center;
     font-size: 14px;
+    z-index: 1;
 }
