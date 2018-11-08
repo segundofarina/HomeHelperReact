@@ -1,11 +1,12 @@
 import React, {Fragment} from 'react'
 import Navbar from '../../components/Navigation/Navbar/Navbar'
 import Footer from '../../components/Navigation/Footer/Footer'
+import styles from './Layout.module.css'
 
 const Layout = props => (
     <Fragment>
         <Navbar />
-        <div style={{flexShrink: 0, flexGrow: 1}}>
+        <div className={styles.MainContainer} >
             {props.children}
         </div>
         <Footer />
