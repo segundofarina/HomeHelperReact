@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { withRouter } from 'react-router-dom'
 import Search from '../../components/Home/Search/Search'
 import style from './Home.module.css'
 import axios from 'axios'
@@ -53,6 +54,8 @@ class Home extends Component {
     onSubmitSearchHandler = () => {
         console.log('Submit')
         console.log(this.state)
+        console.log(this.props)
+        this.props.history.push('/search')
     }
 
     render() {
@@ -76,4 +79,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default withRouter(Home);
