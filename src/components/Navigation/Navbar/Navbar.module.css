@@ -30,7 +30,7 @@
     height: 2em;
 }
 
-.button {
+.loginButton {
     display: none;
     border-radius: 25px;
     background-color: #73879c;
@@ -43,7 +43,7 @@
     border: 2px solid #73879c;
 }
 
-.button:hover {
+.loginButton:hover {
     color: #73879c;
     background-color: #fff;
     border: 2px solid #73879c;
@@ -62,7 +62,7 @@
         height: 2.6em;
     }
 
-    .button {
+    .loginButton {
         display: block;
     }
 }
