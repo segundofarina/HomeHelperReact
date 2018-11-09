@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './profile.module.css'
 import Button from '../../UI/Button/Button'
 import Panel from '../../UI/Panel/Panel'
+import Rating from '../../UI/rating/Rating'
 
 const profile = (props) => {
     return (
@@ -22,7 +23,8 @@ const profile = (props) => {
                         <h5 className={styles.ServiceTypes}>{props.serviceTypes}</h5>
                     </div>
                     <div className={styles.Calification}>
-                        <p className={styles.emptyStars}>Aun no hay calificaciones</p>
+                        {/* <p className={styles.emptyStars}>Aun no hay calificaciones</p> */}
+                        <Rating value={4.7}/>
                     </div>
                 </div>
                 <div className={[styles.row,styles.Description].join(' ')}>
