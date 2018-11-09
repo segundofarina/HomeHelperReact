@@ -25,8 +25,15 @@ class Home extends Component {
     async getServiceTypes () {
         try {
             const resp = await axios.get('/serviceTypes')
-            console.log(resp)
+            const serviceTypeOptions = resp.data.serviceTypesList.map(st => {
+                return {
+                    value: st.id,
+                    name: st.name,
+                }
+            })
+            this.setState({serviceTypeOptions: serviceTypeOptions})
         } catch (error) {
+            console.log("error: ")
             console.log(error)
         }
     }
