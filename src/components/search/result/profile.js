@@ -1,5 +1,4 @@
 import React from 'react'
-import defaultImg from '../../../assets/img/defaultProfile.png'
 import styles from './profile.module.css'
 import Button from '../../UI/Button/Button'
 import Panel from '../../UI/Panel/Panel'
@@ -11,7 +10,9 @@ const profile = (props) => {
                 <div className={styles.ProfileImg}>
                     <img src={props.img} alt="Profile pricture" />
                 </div>
-                <Button>Ver Perfil</Button>
+                <Button
+                onClick={props.onClick} 
+                btnTyoe={".Small"}>Ver Perfil</Button>
             </div>
             <div className={styles.Col}>
                 <div className={[styles.Row, styles.Title].join(' ')}>
@@ -24,7 +25,7 @@ const profile = (props) => {
                         <p className={styles.emptyStars}>Aun no hay calificaciones</p>
                     </div>
                 </div>
-                <div className={styles.row}>
+                <div className={[styles.row,styles.Description].join(' ')}>
                     <p>{props.description}</p>
                 </div>
 

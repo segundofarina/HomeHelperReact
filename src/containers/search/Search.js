@@ -1,6 +1,5 @@
 import React,{Component} from 'react'
 import SearchComponent from '../../components/Home/Search/Search'
-import Panel from '../../components/UI/Panel/Panel'
 import styles from './Search.module.css'
 import defaultImg from '../../assets/img/defaultProfile.png'
 import Profile from '../../components/search/result/profile'
@@ -13,7 +12,11 @@ class Search extends Component{
         return (
             <div className={styles.Container}>
                 <div className={styles.LeftPanel}>
-                    {/* <SearchComponent/> */}
+                    <SearchComponent
+                    serviceTypeDefault={{value:"",name:"Por favor seleccione un tipo de servicio"}}
+                    serviceTypeOptions={[]}
+                    className={styles.SearchComponent}
+                    />
                 </div>
                 <div className={styles.Results}>
                     <Profile className={styles.Profile} 

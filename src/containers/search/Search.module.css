@@ -4,12 +4,24 @@
     background-color: #F7F7F7;
     min-height: 100%;
     width: 100%;
-    position: absolute;
+    justify-content: space-between;
+}
+.LeftPanel{
+    width: 25%;
+    position: -webkit-sticky;
+    position:sticky;
+    height: 300px;
+    top: 95px;
 }
 
+.SearchComponent{
+    margin: 20px 20px 0 40px;
+    
+}
 .Results{
     display: flex;
     justify-content: center;
-    padding: 40px;
+    padding: 40px 40px 40px 0;
     flex-direction: column;
+    width: 75%;
 }

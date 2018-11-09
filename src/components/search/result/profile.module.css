@@ -11,7 +11,7 @@
 .Panel{
     display: flex;
     padding:15px 30px;
-    width: 80%;
+    width: 100%;
     margin:10px;
 }
 
@@ -23,10 +23,14 @@
     padding: 0 20px;
 }
 .ProfileImg {
-    /* margin: auto; */
+    margin: 20px;
     max-width: 7em;
     left: 0;
     right: 0;
+}
+
+.Button{
+    width: 50px;
 }
 
 .Calification{
@@ -41,10 +45,24 @@
     align-items: center;
 }
 
+.ProfileHeader h3{
+    padding-right:15px;
+}
+.ProfileHeader h5{
+    padding-left:15px;
+    font-style: italic;
+    font-weight: normal;
+}
+
 .ProfileImg img {
     border-radius: 100%;
     width: 7em;
     height: 7em;
     object-fit: cover;
+}
+
+
+.Description{
+    padding: 0 20px;
 }
 
