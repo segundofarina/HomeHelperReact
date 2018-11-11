@@ -8,24 +8,28 @@ const rating = (props) => {
     const star = <FontAwesomeIcon icon={faStar} />
     const halfStar = <FontAwesomeIcon icon={faStarHalfAlt} />
     const emptyStar = <FontAwesomeIcon icon={farStar} />
-    
+    const value = props.value
+
     let rating =[]
-    let stars= parseInt(props.value,10) 
+    let stars= parseInt(value,10) 
     
     let half 
-    if(props.value-stars>0.25){
-        half=true;
+    if(value-stars<0.25){
+        half=false
+    }else if(value-stars<0.75){
+        half=true
     }else{
-        half=false;
+        half=false
+        stars+=1
     }
-    let putted=false
+    let pushedHalfStar=false
     
     for (let i = 0; i < 5; i++) {
         if(i<stars){
             rating.push(star)
-        }else if( half && !putted ){
+        }else if( half && !pushedHalfStar ){
             rating.push(halfStar)
-            putted=true
+            pushedHalfStar=true
         }else{
             rating.push(emptyStar)
         }

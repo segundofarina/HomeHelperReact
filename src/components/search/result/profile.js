@@ -24,7 +24,7 @@ const profile = (props) => {
                     </div>
                     <div className={styles.Calification}>
                         {/* <p className={styles.emptyStars}>Aun no hay calificaciones</p> */}
-                        <Rating value={4.7}/>
+                        <Rating value={props.calification}/>
                     </div>
                 </div>
                 <div className={[styles.row,styles.Description].join(' ')}>
