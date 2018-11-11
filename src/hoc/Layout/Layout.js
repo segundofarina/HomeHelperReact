@@ -5,7 +5,7 @@ import styles from './Layout.module.css'
 
 const Layout = props => (
     <Fragment>
-        <Navbar />
+        <Navbar authenticated />
         <div className={styles.MainContainer} >
             {props.children}
         </div>
