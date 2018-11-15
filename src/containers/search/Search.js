@@ -23,27 +23,32 @@ class Search extends Component{
                     name="Segundo Farina"
                     serviceTypes="Carpintero"
                     description={description}
-                    img={defaultImg}/>
+                    img={defaultImg}
+                    calification={5}/>
                     <Profile className={styles.Profile} 
                     name="Segundo Farina"
                     serviceTypes="Carpintero"
                     description={description}
-                    img={defaultImg}/>
+                    img={defaultImg}
+                    calification={2.5}/>
                     <Profile className={styles.Profile} 
                     name="Segundo Farina"
                     serviceTypes="Carpintero"
                     description={description}
-                    img={defaultImg}/>
+                    img={defaultImg}
+                    calification={3}/>
                     <Profile className={styles.Profile} 
                     name="Segundo Farina"
                     serviceTypes="Carpintero"
                     description={description}
-                    img={defaultImg}/>
+                    img={defaultImg}
+                        calification={3.5}/>
                     <Profile className={styles.Profile} 
                     name="Segundo Farina"
                     serviceTypes="Carpintero"
                     description={description}
-                    img={defaultImg}/>
+                    img={defaultImg}
+                    calification={4.1}/> 
                 </div>
                 
 
