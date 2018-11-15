@@ -13,7 +13,6 @@
 
 .MenuBtn:hover {
     background-color: #eee;
-
 }
 
 .MenuBtn:before {
@@ -33,7 +32,12 @@
     transition-timing-function: ease-out;
 }
 
-.MenuBtn:hover:before, .MenuBtn:focus:before, .MenuBtn:active:before {
+.MenuBtn:hover:before, .MenuBtn:focus:before, .MenuBtn:active:before, .MenuBtn.active:before {
+    left: 0;
+    right: 0;
+}
+
+.active:before {
     left: 0;
     right: 0;
 }
