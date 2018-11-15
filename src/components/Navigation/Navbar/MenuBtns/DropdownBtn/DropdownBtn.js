@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import styles from './DropdownBtn.module.css'
 import DropdownItemBtn from './DropdownItemBtn/DropdownItemBtn'
 import defaultProfileImage from '../../../../../assets/img/defaultProfile.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 class DropdownBtn extends Component {
     state = {
@@ -12,13 +14,17 @@ class DropdownBtn extends Component {
         this.setState((prevState) => ({open: !prevState.open}))
     }
 
+    closeList = () => {
+        this.setState({open: false})
+    }
+
     setWrapperRef = (node) => {
         this.wrapperRef = node
     }
 
     handleClickOutside = (event) => {
         if(this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-            this.setState({open: false})
+            this.closeList()
         }
     }
 
@@ -41,17 +47,33 @@ class DropdownBtn extends Component {
             listStylesArr.push(styles.open)
         }
 
+        const headerStylesArr = [styles.dropdownHeader]
+        if(this.state.open) {
+            headerStylesArr.push(styles.open)
+        }
+
         return (
             <div ref={this.setWrapperRef}>
-                <div className={styles.dropdownHeader}
+                <div className={headerStylesArr.join(' ')}
                     onClick={this.toggleOpen}>
                     <img src={profileImage} alt="" />
                     <span>{this.props.name}</span>
-                    
+                    <FontAwesomeIcon icon={faChevronDown} className={styles.dropdownIcon} />
                 </div>
                 <div className={listStylesArr.join(' ')}>
-                    <DropdownItemBtn />
-                    <DropdownItemBtn />
+                    <DropdownItemBtn to="/createProvider"
+                                    onClick={this.closeList}>
+                        Crear perfil del proveedor
+                    </DropdownItemBtn>
+                    <DropdownItemBtn to="/settings"
+                                    onClick={this.closeList}>
+                        Configuracion
+                    </DropdownItemBtn>
+                    <DropdownItemBtn icon="logout"
+                                    to="/logout"
+                                    onClick={this.closeList}>
+                        Cerrar Sesion
+                    </DropdownItemBtn>
                 </div>
             </div>
         )

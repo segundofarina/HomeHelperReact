@@ -15,12 +15,21 @@
     background-color: #eee;
 }
 
+.dropdownHeader.open {
+    background-color: #eee;
+}
+
 .dropdownHeader img {
     width: 29px;
     height: 29px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 10px;
+}
+
+.dropdownIcon {
+    margin-left: 0.5em;
+    font-size: 9px;
 }
 
 .dropdownList {

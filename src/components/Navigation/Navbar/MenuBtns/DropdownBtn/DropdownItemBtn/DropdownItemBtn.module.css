@@ -3,6 +3,10 @@
     padding: 12px 20px;
     color: #696464;
     cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
 }
 
 .dropdownItemBtn:hover,
