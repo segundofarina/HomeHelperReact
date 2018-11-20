@@ -49,7 +49,7 @@ class Search extends Component {
                     value={this.state.location} />
                 <Input inputType="select"
                     label="Tipo de servicio"
-                    value={defaultValue.value}
+                    value={this.state.serviceType}
                     onChange={this.serviceTypeChangeHandler}
                     defaultValue={defaultValue}
                     options={this.props.serviceTypesOptions} />
