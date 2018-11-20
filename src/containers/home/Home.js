@@ -5,11 +5,6 @@ import style from './Home.module.css'
 
 class Home extends Component {
 
-    state = {
-        location: '',
-        serviceType: '',
-    }
-
     render() {
         return (
             <div className={style.Container}>

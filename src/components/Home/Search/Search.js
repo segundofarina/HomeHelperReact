@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import * as serviceTypesActions from '../../../store/actions/serviceTypesActions'
 import * as searchDataActions from '../../../store/actions/searchDataActions'
+import * as searchResultsActions from '../../../store/actions/searchResultsActions'
 
 class Search extends Component {
 
@@ -32,6 +33,7 @@ class Search extends Component {
     onSubmitSearchHandler = () => {
         /* Validate form fields */
         this.props.searchDataUpdate(this.state.location, this.state.serviceType)
+        this.props.searchResultsUpdate(this.state.location, this.state.serviceType)
         this.props.history.push('/search')
     }
 
@@ -74,6 +76,7 @@ const mapDispatchToProps = dispatch => {
     return {
         serviceTypesInit: () => dispatch(serviceTypesActions.serviceTypesInit()),
         searchDataUpdate: (location, serviceType) => dispatch(searchDataActions.searchDataUpdate(location, serviceType)),
+        searchResultsUpdate: (location, serviceType) => dispatch(searchResultsActions.searchResultsUpdate(location, serviceType)),
     }
 }
 
