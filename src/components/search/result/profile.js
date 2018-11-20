@@ -5,38 +5,67 @@ import Panel from '../../UI/Panel/Panel'
 import Rating from '../../UI/rating/Rating'
 
 const profile = (props) => {
+
+    let calification = (<p className={styles.emptyCalification}>Aun no hay calificaciones</p>)
+    if(props.calification && props.calification !== 0) {
+        calification = (<Rating value={props.calification} className={styles.calificationStars}/>)
+    }
+
     return (
         <Panel className={styles.Panel}>
             <div className={styles.Col}>
                 <div className={styles.ProfileImg}>
-                    <img src={props.img} alt="Profile pricture" />
+                    <img src={props.img} alt="" />
                 </div>
-                <Button
-                onClick={props.onClick} 
-                btnTyoe={".Small"}>Ver Perfil</Button>
+                <Button onClick={props.onClick} 
+                    btnType='Small'
+                    btnImpl='Link'
+                    to={`/profile/${props.id}`}>
+                    Ver Perfil
+                </Button>
             </div>
             <div className={styles.Col}>
-                <div className={[styles.Row, styles.Title].join(' ')}>
+                <div className={styles.Title}>
                     <div className={styles.ProfileHeader}>
-                        <h3 className={styles.ProfileName}>{props.name}</h3>
-                        <span className={styles.SeparatorDot}>&#x25CF;</span>
-                        <h5 className={styles.ServiceTypes}>{props.serviceTypes}</h5>
+                        <h3>{props.name}</h3>
+                        <span>&#x25CF;</span>
+                        <h5>{props.serviceTypes}</h5>
                     </div>
-                    <div className={styles.Calification}>
-                        {/* <p className={styles.emptyStars}>Aun no hay calificaciones</p> */}
-                        <Rating value={props.calification}/>
-                    </div>
+                    {calification}
                 </div>
-                <div className={[styles.row,styles.Description].join(' ')}>
+                <div className={styles.Description}>
                     <p>{props.description}</p>
                 </div>
-
             </div>
-
         </Panel>
-
-
     )
-}
+/*
+    return (
+            <Panel className={styles.Panel}>
+                <div className={styles.headerContainer}>
+                    <div className={styles.ProfileImg}>
+                        <img src={props.img} alt="" />
+                    </div>
+                     <div className={styles.Title}>
+                        <div className={styles.ProfileHeader}>
+                            <h3>{props.name}</h3>
+                            <span>&#x25CF;</span>
+                            <h5>{props.serviceTypes}</h5>
+                        </div>
+                        {calification}
+                    </div>
+                </div>
+                <div className={styles.infoContainer}>
+                    <Button onClick={props.onClick} 
+                        btnType="Small">
+                        Ver Perfil
+                    </Button>
+                     <div className={styles.Description}>
+                        <p>{props.description}</p>
+                    </div>
+                </div>
+           </Panel>
+        )*/
+    }
 
 export default profile

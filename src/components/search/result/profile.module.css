@@ -1,9 +1,3 @@
-.Row{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: 100%;
-}
 .Col {
     display: flex;
     flex-direction: column;
@@ -22,6 +16,7 @@
     width: 100%;
     padding: 0 20px;
 }
+
 .ProfileImg {
     margin: 20px;
     max-width: 7em;
@@ -33,10 +28,13 @@
     width: 50px;
 }
 
-.Calification{
-    text-align: center;
-    color: #afafaf;
+.emptyCalification {
+    font-size: 12px;
     font-style: italic;
+    color: #afafaf;
+}
+
+.calificationStars {
     font-size: 12px;
 }
 
@@ -47,6 +45,8 @@
 
 .ProfileHeader h3{
     padding-right:15px;
+    margin: 0;
+    font-size: 24px;
 }
 .ProfileHeader h5{
     padding-left:15px;
@@ -61,8 +61,8 @@
     object-fit: cover;
 }
 
-
 .Description{
     padding: 0 20px;
+    font-size: 14px;
 }
 

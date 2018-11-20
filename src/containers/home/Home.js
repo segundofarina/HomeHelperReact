@@ -10,16 +10,6 @@ class Home extends Component {
         location: '',
         serviceType: '',
         serviceTypeOptions: []
-        /*serviceTypeOptions: [
-            {
-                value: 'pintor',
-                name: 'Pintor',
-            },
-            {
-                value: 'electricista',
-                name: 'Electricista',
-            },
-        ],*/
     }
 
     /* Get service type options from api */
@@ -34,13 +24,14 @@ class Home extends Component {
             })
             this.setState({serviceTypeOptions: serviceTypeOptions})
         } catch (error) {
-            console.log("error: ")
             console.log(error)
         }
     }
 
     componentDidMount() {
-        this.getServiceTypes()
+        if(this.state.serviceTypeOptions.length === 0) {
+            this.getServiceTypes()
+        }
     }
 
     locationChangeHandler = (event) => {
@@ -52,9 +43,6 @@ class Home extends Component {
     }
 
     onSubmitSearchHandler = () => {
-        console.log('Submit')
-        console.log(this.state)
-        console.log(this.props)
         this.props.history.push('/search')
     }
 
