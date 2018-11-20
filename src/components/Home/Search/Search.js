@@ -5,12 +5,13 @@ import Panel from '../../UI/Panel/Panel'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import * as serviceTypesActions from '../../../store/actions/serviceTypesActions'
+import * as searchDataActions from '../../../store/actions/searchDataActions'
 
 class Search extends Component {
 
     state = {
-        location: '',
-        serviceType: '',
+        location: this.props.keepMemory ? this.props.searchData.location : '',
+        serviceType: this.props.keepMemory ? this.props.searchData.serviceType : '',
     }
 
     componentDidMount() {
@@ -30,6 +31,7 @@ class Search extends Component {
 
     onSubmitSearchHandler = () => {
         /* Validate form fields */
+        this.props.searchDataUpdate(this.state.location, this.state.serviceType)
         this.props.history.push('/search')
     }
 
@@ -63,13 +65,15 @@ class Search extends Component {
 
 const mapStateToProps = state => {
     return {
-        serviceTypesOptions: state.serviceTypes.serviceTypesOptions
+        serviceTypesOptions: state.serviceTypes.serviceTypesOptions,
+        searchData: state.searchData,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        serviceTypesInit: () => dispatch(serviceTypesActions.serviceTypesInit())
+        serviceTypesInit: () => dispatch(serviceTypesActions.serviceTypesInit()),
+        searchDataUpdate: (location, serviceType) => dispatch(searchDataActions.searchDataUpdate(location, serviceType)),
     }
 }
 

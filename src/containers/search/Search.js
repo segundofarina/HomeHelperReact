@@ -43,7 +43,7 @@ class Search extends Component {
                         serviceTypeDefault={{value:"",name:"Por favor seleccione un tipo de servicio"}}
                         serviceTypeOptions={this.props.serviceTypesOptions}
                         className={styles.SearchComponent}
-                        />
+                        keepMemory />
                 </div>
                 <div className={styles.Results}>
                     <Profile className={styles.Profile} 
