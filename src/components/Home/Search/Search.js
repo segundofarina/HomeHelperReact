@@ -1,45 +1,76 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Button from '../../UI/Button/Button'
 import Input from '../../UI/Input/Input'
 import Panel from '../../UI/Panel/Panel'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import * as serviceTypesActions from '../../../store/actions/serviceTypesActions'
 
-const search = (props) => {
-    const defaultValue = {
-        value: '',
-        name: 'Select a service type',
+class Search extends Component {
+
+    state = {
+        location: '',
+        serviceType: '',
     }
 
-    let selectElem = <Input inputType="select"
-                            label="Tipo de servicio"
-                            value={defaultValue.value}
-                            onChange={props.onServiceTypeChange}
-                            defaultValue={defaultValue}
-                            />
-
-    if(props.serviceTypeOptions) {
-        selectElem = <Input inputType="select"
-                label="Tipo de Servicio:"
-                type="text"
-                placeholder="Seleccione un tipo de servicio"
-                onChange={props.onServiceTypeChange}
-                value={props.serviceTypeValue}
-                defaultValue={props.serviceTypeDefault}
-                options={props.serviceTypeOptions} />
+    componentDidMount() {
+        if(this.props.serviceTypesOptions.length === 0) {
+            /* Fetch service types options only the first time */
+            this.props.serviceTypesInit()
+        }
     }
 
-    return (
-        <Panel className={props.className}>
-            <Input inputType="input"
-                label="Zona:"
-                type="text"
-                placeholder="Ingrese su direccion"
-                onChange={props.onLocationChange}
-                value={props.locationValue} />
-            {selectElem}
-            <Button onClick={props.onSubmitSearch}>
-                Buscar
-            </Button>
-        </Panel>
-    )}
+    locationChangeHandler = (event) => {
+        this.setState({location: event.target.value})
+    }
 
-export default search
+    serviceTypeChangeHandler = (event) => {
+        this.setState({serviceType: event.target.value})
+    }
+
+    onSubmitSearchHandler = () => {
+        /* Validate form fields */
+        this.props.history.push('/search')
+    }
+
+    render () {
+        const defaultValue = {
+            value: '',
+            name: 'Select a service type',
+        }
+
+        return (
+            <Panel className={this.props.className}>
+                <Input inputType="input"
+                    label="Zona:"
+                    type="text"
+                    placeholder="Ingrese su direccion"
+                    onChange={this.locationChangeHandler}
+                    value={this.state.location} />
+                <Input inputType="select"
+                    label="Tipo de servicio"
+                    value={defaultValue.value}
+                    onChange={this.serviceTypeChangeHandler}
+                    defaultValue={defaultValue}
+                    options={this.props.serviceTypesOptions} />
+                <Button onClick={this.onSubmitSearchHandler}>
+                    Buscar
+                </Button>
+            </Panel>
+        )
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        serviceTypesOptions: state.serviceTypes.serviceTypesOptions
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        serviceTypesInit: () => dispatch(serviceTypesActions.serviceTypesInit())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Search))

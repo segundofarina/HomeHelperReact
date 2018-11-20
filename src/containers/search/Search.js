@@ -4,7 +4,6 @@ import styles from './Search.module.css'
 import defaultImg from '../../assets/img/defaultProfile.png'
 import Profile from '../../components/search/result/profile'
 import { connect } from 'react-redux'
-import * as serviceTypesActions from '../../store/actions/serviceTypesActions'
 
 class Search extends Component {
 
@@ -31,10 +30,6 @@ class Search extends Component {
     }*/
 
     componentDidMount() {
-        if(this.props.serviceTypesOptions.length === 0) {
-            /* Fetch service types options only the first time */
-            this.props.serviceTypesInit()
-        }
 //        this.getSearchResults()
     }
     
@@ -93,16 +88,4 @@ class Search extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        serviceTypesOptions: state.serviceTypes.serviceTypesOptions
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        serviceTypesInit: () => dispatch(serviceTypesActions.serviceTypesInit())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Search)
+export default connect()(Search)
