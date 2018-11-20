@@ -3,7 +3,8 @@ import SearchComponent from '../../components/Home/Search/Search'
 import styles from './Search.module.css'
 import defaultImg from '../../assets/img/defaultProfile.png'
 import Profile from '../../components/search/result/profile'
-import axios from 'axios'
+import { connect } from 'react-redux'
+import * as serviceTypesActions from '../../store/actions/serviceTypesActions'
 
 class Search extends Component {
 
@@ -15,22 +16,26 @@ class Search extends Component {
     }
 
     /* Get search results from api */
-    async getSearchResults() {
+/*    async getSearchResults() {
         try {
             const ans = await axios.get('/providers')
             console.log(ans.data)
             const providers = ans.data.providers.map(provider => {
                 return {
-
+                    
                 }
             })
         } catch (error) {
             console.log(error)
         }
-    }
+    }*/
 
     componentDidMount() {
-        this.getSearchResults()
+        if(this.props.serviceTypesOptions.length === 0) {
+            /* Fetch service types options only the first time */
+            this.props.serviceTypesInit()
+        }
+//        this.getSearchResults()
     }
     
     render () {
@@ -41,7 +46,7 @@ class Search extends Component {
                 <div className={styles.LeftPanel}>
                     <SearchComponent
                         serviceTypeDefault={{value:"",name:"Por favor seleccione un tipo de servicio"}}
-                        serviceTypeOptions={[]}
+                        serviceTypeOptions={this.props.serviceTypesOptions}
                         className={styles.SearchComponent}
                         />
                 </div>
@@ -88,4 +93,16 @@ class Search extends Component {
     }
 }
 
-export default Search
+const mapStateToProps = state => {
+    return {
+        serviceTypesOptions: state.serviceTypes.serviceTypesOptions
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        serviceTypesInit: () => dispatch(serviceTypesActions.serviceTypesInit())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search)
