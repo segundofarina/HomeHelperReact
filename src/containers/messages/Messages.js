@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styles from './Messages.module.css'
 import ContactList from '../../components/Messages/ContactList/ContactList'
+import Chat from '../../components/Messages/Chat/Chat'
 
 class Messages extends Component {
 
@@ -24,7 +25,8 @@ class Messages extends Component {
 
         return (
             <div className={styles.Container}>
-                <ContactList contacts={contacts} handleContactClick={this.handleContactClick} />
+                <ContactList contacts={contacts} handleContactClick={this.handleContactClick} activeChat={3} />
+                <Chat />
             </div>)
     }
 }

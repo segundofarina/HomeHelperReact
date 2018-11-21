@@ -9,8 +9,13 @@ const contactItem = (props) => {
         previewMsg += '...'
     }
 
+    let contactItemStyles = [styles.ContactItem]
+    if(props.active) {
+        contactItemStyles.push(styles.Active)
+    }
+
     return (
-        <div className={styles.ContactItem} onClick={props.onClick}>
+        <div className={contactItemStyles.join(' ')} onClick={props.onClick}>
             <div className={styles.Wrap}>
                 <img src={defaultImg} alt="" className={styles.ProfilePicture} />
                 <div className={styles.ContactInfo}>

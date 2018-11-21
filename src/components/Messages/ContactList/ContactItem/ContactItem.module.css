@@ -7,12 +7,12 @@
     cursor: pointer;
 }
 
-.ContactItem .Active {
-    background: #d8d8d8;
-}
-
 .ContactItem:hover {
     background: #eaeaea;
+}
+
+.ContactItem.Active {
+    background: #d8d8d8;
 }
 
 .Wrap {

@@ -19,13 +19,14 @@ class ContactList extends Component {
                 <SearchBox handleFilterSearch={this.handleFilterSearch} value={this.state.filterSearch} />
                 <div className={styles.Contacts}>
                     {this.props.contacts.filter(contact => {
-                        return contact.name.includes(this.state.filterSearch)
+                        return contact.name.toLowerCase().includes(this.state.filterSearch.toLowerCase())
                     }).map(contact => {
                         return (<ContactItem 
                             key={contact.id}
                             onClick={() => this.props.handleContactClick(contact.id)}
                             name={contact.name}
-                            previewMsg={contact.msg} />)
+                            previewMsg={contact.msg}
+                            active={this.props.activeChat === contact.id} />)
                     })}
                 </div>
             </div>
