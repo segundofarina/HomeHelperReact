@@ -24,9 +24,14 @@ const input = (props) => {
             break
     }
 
+    let labelElem = null
+    if(props.label) {
+        labelElem = (<label>{props.label}</label>)
+    }
+
     return (
         <div className={styles.formGroup}>
-            <label>{props.label}</label>
+            {labelElem}
             {inputElem}
         </div>
     )
