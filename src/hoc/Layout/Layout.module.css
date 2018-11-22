@@ -4,6 +4,7 @@
     flex-grow: 1;
     flex-shrink: 0;
     min-height: calc(100vh - 50px); /* browser size - navbar size */
+    display: flex;
 }
 
 @media (min-width: 768px) {
