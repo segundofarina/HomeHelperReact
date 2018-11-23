@@ -5,6 +5,7 @@ import Layout from './hoc/Layout/Layout'
 import Home from './containers/home/Home'
 import Search from './containers/search/Search'
 import Profile from './containers/profile/Profile'
+import Messages from './containers/messages/Messages'
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
               <Route path="/" exact component={Home} />
               <Route path="/search" exact component={Search} />
               <Route path="/profile" exact component={Profile} />
+              <Route path="/messages" exact component={Messages} />
               <Route render={() => (<h1>404 Not found</h1>)} />
             </Switch>
           </Layout>

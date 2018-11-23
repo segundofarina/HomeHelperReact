@@ -24,12 +24,12 @@ const profile = (props) => {
                     Ver Perfil
                 </Button>
             </div>
-            <div className={styles.Col}>
+            <div className={styles.InfoContainer}>
                 <div className={styles.Title}>
                     <div className={styles.ProfileHeader}>
                         <h3>{props.name}</h3>
                         <span>&#x25CF;</span>
-                        <h5>{props.serviceTypes}</h5>
+                        <h5>{props.serviceTypes.join(', ')}</h5>
                     </div>
                     {calification}
                 </div>
