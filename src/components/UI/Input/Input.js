@@ -7,14 +7,14 @@ const input = (props) => {
 
     switch(props.inputType) {
         case ('input'):default:
-            inputElem = (<input {...inputProps} className={styles.inputElem} />)
+            inputElem = (<input {...inputProps} className={[styles.inputElem, props.className].join(' ')} />)
             break
         case ('textarea'):
-            inputElem = (<textarea {...inputProps} className={styles.textAreaElem}>{props.children}</textarea>)
+            inputElem = (<textarea {...inputProps} className={[styles.textAreaElem, props.className].join(' ')}>{props.children}</textarea>)
             break
         case ('select'):
             inputElem = (<select value={props.value}
-                            className={styles.inputElem}
+                            className={[styles.inputElem, props.className].join(' ')}
                             onChange={props.onChange}>
                     <option value={props.defaultValue.value}>{props.defaultValue.name}</option>
                     {props.options.map(option => (
