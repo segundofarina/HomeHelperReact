@@ -43,6 +43,7 @@ const aptitude = (props)=>{
                         img = {defaultImg}
 
                     />
+                    <hr/>
                     <Review
                         name = "Marcos Lopez"
                         date = "16/05/2018"
@@ -51,6 +52,7 @@ const aptitude = (props)=>{
                         img = {defaultImg}
 
                     />
+                    <hr/>
                     <Review
                         name = "Marcos Lopez"
                         date = "16/05/2018"
@@ -59,6 +61,7 @@ const aptitude = (props)=>{
                         img = {defaultImg}
 
                     />
+                    <hr/>
                     <Review
                         name = "Marcos Lopez"
                         date = "16/05/2018"
@@ -67,6 +70,7 @@ const aptitude = (props)=>{
                         img = {defaultImg}
 
                     />
+                    <hr/>
                     <Review
                         name = "Marcos Lopez"
                         date = "16/05/2018"
@@ -75,6 +79,7 @@ const aptitude = (props)=>{
                         img = {defaultImg}
 
                     />
+                    <hr/>
                 </Panel>
             </div>
         </div>
