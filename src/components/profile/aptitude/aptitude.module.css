@@ -1,0 +1,16 @@
+.Container{
+    display: flex;
+    align-items: flex-start;
+}
+.Description p{
+    margin: 28px 42px;
+}
+.Description {
+    margin: 20px;
+    width: 70%;
+    height: auto;
+}
+.Calification{
+    margin: 20px;
+    width: 30%;
+}
