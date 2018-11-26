@@ -10,6 +10,7 @@ import thunk from 'redux-thunk'
 import serviceTypesReducer from './store/reducers/serviceTypesReducer'
 import searchDataReducer from './store/reducers/searchDataReducer'
 import searchResultsReducer from './store/reducers/searchResultsReducer'
+import chatReducer from './store/reducers/chatReducer'
 
 axios.defaults.baseURL = 'http://localhost:8080/api'
 
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     serviceTypes: serviceTypesReducer,
     searchData: searchDataReducer,
     searchResults: searchResultsReducer,
+    chat: chatReducer,
 })
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
