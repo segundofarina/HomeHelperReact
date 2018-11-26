@@ -14,3 +14,11 @@
     margin: 20px;
     width: 30%;
 }
+
+hr{
+    margin:0;
+}
+
+hr:last-of-type{
+    display: none;
+}

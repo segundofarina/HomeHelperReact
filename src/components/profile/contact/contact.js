@@ -3,9 +3,7 @@ import Button from '../../UI/Button/Button'
 import Input from '../../UI/Input/Input'
 import Panel from '../../UI/Panel/Panel'
 import styles from './contact.module.css'
-import DatePicker from 'react-datepicker'
- import 'react-datepicker/dist/react-datepicker.css'
- import { faCalendar as faCalendar } from '@fortawesome/free-solid-svg-icons'
+ import { faCalendar } from '@fortawesome/free-solid-svg-icons'
  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';

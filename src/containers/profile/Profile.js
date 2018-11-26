@@ -8,11 +8,16 @@ import WorkingZone from '../../components/profile/workingZone/workingZone'
 import Panel from '../../components/UI/Panel/Panel'
 
 class Profile extends Component {
-    description = "Realizamos: Interiores y frentes de placards Muebles para LCD y Led Alacenas y Bajo mesadas Vanitorys Muebles para chicos Stands Muebles para oficinas Bibliotecas Mesas ratonas Muebles para Playrooms Respaldos y Mesas de luz Reposeras Pergolas y Decks\
-    Y todo lo que necesites...siempre cumpliendo lo convenido, asesorándote para lograr el mejor aprovechamiento del espacio y entregando en los plazos acordados.\
-    Visita nuestro sitio web: www.tocamaderamuebles.com.ar"
 
     render(){
+        const description = "Realizamos: Interiores y frentes de placards Muebles para LCD y Led Alacenas y Bajo mesadas Vanitorys Muebles para chicos Stands Muebles para oficinas Bibliotecas Mesas ratonas Muebles para Playrooms Respaldos y Mesas de luz Reposeras Pergolas y Decks\
+        Y todo lo que necesites...siempre cumpliendo lo convenido, asesorándote para lograr el mejor aprovechamiento del espacio y entregando en los plazos acordados.\
+        Visita nuestro sitio web: www.tocamaderamuebles.com.ar"
+    
+        const coordenates = [{lat: -34.557176, lng: -58.430436},
+            {lat: -34.575376, lng: -58.403839},
+            {lat: -34.588696, lng: -58.431428}];
+
         return <div>
             <Summary name="Bianca Matus" serviceTypes="Carpintero" rating={4.7} img={defaultImg}/>
             <div className={styles.MainContainer}>
@@ -32,12 +37,17 @@ class Profile extends Component {
                     <div >
                         <Aptitude
                         name="Carpintero"
-                        description = {this.description}/>
+                        description = {description}/>
+                        <Aptitude
+                        name="Carpintero"
+                        description = {description}/>
                     </div>
                     <div>
                         <h3>Area de trabajo</h3>
                         <Panel>
-                        <WorkingZone/>
+                        <WorkingZone
+                            coordenates={coordenates}
+                        />
                         </Panel>
                     </div>
                     
