@@ -1,72 +1,34 @@
 import * as actionTypes from '../actions/actionTypes'
+import * as apiStatus from '../apiStatus'
 
 const initialState = {
-    currentChat: 1,
+    currentChat: null,
     idCounter: 11,
-    chats: [
-        {
-            chatId: 1,
-            toName: 'Martin Victory',
-            toUsername: 'tinchovictory',
-            messages: [
-                {
-                    id: 1,
-                    from: 'mine',
-                    text: 'Hola',
-                }, {
-                    id: 2,
-                    from: 'mine',
-                    text: 'Como va?',
-                }, {
-                    id: 3,
-                    from: 'yours',
-                    text: 'Hola',
-                }, {
-                    id: 4,
-                    from: 'yours',
-                    text: 'Todo bien',
-                }, {
-                    id: 5,
-                    from: 'yours',
-                    text: 'Vos?',
-                    isNewMsg: true
-                },
-            ]
-        },
-        {
-            chatId: 2,
-            toName: 'Martin Victory2',
-            toUsername: 'tinchovictory2',
-            messages: [
-                {
-                    id: 6,
-                    from: 'mine',
-                    text: 'Holaa',
-                }, {
-                    id: 7,
-                    from: 'mine',
-                    text: 'Como va??',
-                }, {
-                    id: 8,
-                    from: 'yours',
-                    text: 'Holaa',
-                }, {
-                    id: 9,
-                    from: 'yours',
-                    text: 'Todo bienn',
-                }, {
-                    id: 10,
-                    from: 'yours',
-                    text: 'Vos??',
-                },
-            ]
-        },
-    ],
+    status: apiStatus.API_STATUS_NONE,
+    chats: [],
 }
 
 const reducer = (state = initialState, action) => {
     let newMsg = {}
     switch(action.type) {
+        case actionTypes.CHAT_INIT_DONE:
+            const processChats = processChatsLoaded(action.payload.chats)
+            return {
+                ...state,
+                status: apiStatus.API_STATUS_DONE,
+                chats: processChats.chats,
+                idCounter: processChats.idCounter,
+            }
+        case actionTypes.CHAT_INIT_LOADING:
+            return {
+                ...state,
+                status: apiStatus.API_STATUS_LOADING,
+            }
+        case actionTypes.CHAT_INIT_ERROR:
+            return {
+                ...state,
+                status: apiStatus.API_STATUS_ERROR,
+            }
         case actionTypes.CHAT_CURRENT_CHAT_UPDATE:
             return {
                 ...state,
@@ -161,6 +123,32 @@ const getUpdatedChatListWithoutIsNew = (chats) => {
     })
 
     return updatedChats
+}
+
+const processChatsLoaded = (chats) => {
+    const updatedChats = []
+    let idCount = 0
+
+    chats.forEach(chat => {
+        const newMessages = chat.messages.map(message => {
+            let id = idCount
+            idCount += 1
+            return {
+                ...message,
+                id: id,
+            }
+        })
+
+        updatedChats.push({
+            ...chat,
+            messages: newMessages
+        })
+    })
+
+    return {
+        chats: updatedChats,
+        idCounter: idCount,
+    }
 }
 
 export default reducer
