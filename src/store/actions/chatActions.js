@@ -64,3 +64,9 @@ export const chatInit = () => {
         }
     }
 }
+
+export const chatUpdateIsNewMsg = () => {
+    return {
+        type: actionTypes.CHAT_UPDATE_IS_NEW_MSG,
+    }
+}

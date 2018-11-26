@@ -59,6 +59,11 @@ const reducer = (state = initialState, action) => {
                 chats: getUpdatedChatListByUsername(state.chats, newMsg, action.payload.username),
                 idCounter: state.idCounter + 1,
             }
+        case actionTypes.CHAT_UPDATE_IS_NEW_MSG:
+            return {
+                ...state,
+                chats: getUpdatedChatListWithoutIsNew(state.chats),
+            }
         default:
             return state
     }

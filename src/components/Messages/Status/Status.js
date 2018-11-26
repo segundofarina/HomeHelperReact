@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './Status.module.css'
 import Panel from '../../UI/Panel/Panel'
+import Button from '../../UI/Button/Button'
 import defaultImg from '../../../assets/img/searchEmpty.png'
 
 const status = (props) => {
@@ -15,11 +16,17 @@ const status = (props) => {
         elem = (<img className={styles.Img} alt="" src={defaultImg} />)
     }
 
+    let reconnectBtn = null
+    if(props.reconnectHandler) {
+        reconnectBtn = (<Button onClick={props.reconnectHandler} btnType="Small" >Try Again</Button>)
+    }
+
     return (
         <div className={styles.StatusContainer}>
             <Panel className={styles.Panel}>
                 {elem}
                 <p className={styles.Description}>{props.text}</p>
+                {reconnectBtn}
             </Panel>
         </div>
     )
