@@ -24,6 +24,11 @@
     background-color: #73879C;
 }
 
+.Blue {
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
 .Small{
     font-size: 12px;
     line-height: 1.5;
@@ -33,3 +38,10 @@
     padding: 5px 10px;
 }
 
+.XSmall {
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    font-weight: 500;
+}

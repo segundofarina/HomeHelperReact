@@ -6,7 +6,7 @@ import styles from './MenuBtns.module.css'
 const menuBtns = () => (
     <div className={styles.MenuBtns}>
         <MenuBtn to="/messages">Mensajes</MenuBtn>
-        <MenuBtn to="/appointment">Citas</MenuBtn>
+        <MenuBtn to="/appointments">Citas</MenuBtn>
         <DropdownBtn name="Segundo" img="" />
     </div>
 )
