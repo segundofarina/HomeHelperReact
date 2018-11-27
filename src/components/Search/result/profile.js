@@ -39,33 +39,6 @@ const profile = (props) => {
             </div>
         </Panel>
     )
-/*
-    return (
-            <Panel className={styles.Panel}>
-                <div className={styles.headerContainer}>
-                    <div className={styles.ProfileImg}>
-                        <img src={props.img} alt="" />
-                    </div>
-                     <div className={styles.Title}>
-                        <div className={styles.ProfileHeader}>
-                            <h3>{props.name}</h3>
-                            <span>&#x25CF;</span>
-                            <h5>{props.serviceTypes}</h5>
-                        </div>
-                        {calification}
-                    </div>
-                </div>
-                <div className={styles.infoContainer}>
-                    <Button onClick={props.onClick} 
-                        btnType="Small">
-                        Ver Perfil
-                    </Button>
-                     <div className={styles.Description}>
-                        <p>{props.description}</p>
-                    </div>
-                </div>
-           </Panel>
-        )*/
-    }
+}
 
 export default profile

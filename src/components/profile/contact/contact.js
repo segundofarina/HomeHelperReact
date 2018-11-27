@@ -31,6 +31,7 @@ class Contact extends Component {
             name: 'Select a service type',
         }
         return(<Panel className={styles.Panel}>
+                <h4>Consulte con {this.props.providerName}</h4>
                 <Input inputType="select"
                     label="Tipo de servicio"
                     value={this.props.serviceTypes}

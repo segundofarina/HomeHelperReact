@@ -1,7 +1,6 @@
 import React from 'react'
 import Panel from '../../UI/Panel/Panel'
 import Rating from'../../UI/rating/Rating'
-import styles from './calification.module.css'
 import ProgressBar from '../../UI/progressBar/progressBar'
 
 const Calification = (props)=>{

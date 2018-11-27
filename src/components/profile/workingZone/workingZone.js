@@ -5,7 +5,6 @@ const MY_API_KEY = "AIzaSyBqSX1WHUw4OlgMDzYM40uSVPGkV06DR1I"
 
 
 const adjustMap= (mapProps, map)=> {
-    console.log(mapProps)
     const {google, children} = mapProps;
     const bounds = new google.maps.LatLngBounds();
     // const coordenates = [{lat: -34.557176, lng: -58.430436},

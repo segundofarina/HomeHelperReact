@@ -57,6 +57,10 @@
     flex-direction: column;
 }
 
+.Panel h4 {
+    text-align: center;
+}
+
 .DatePicker{
     transform: scale(2);
 }
