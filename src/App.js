@@ -8,6 +8,7 @@ import Profile from './containers/profile/Profile'
 import Messages from './containers/messages/Messages'
 import Login from './containers/login/Login'
 import Appointments from './containers/appointments/Appointments'
+import Review from './containers/review/Review'
 
 class App extends Component {
   render() {
@@ -23,6 +24,7 @@ class App extends Component {
                 <Route path="/profile" exact component={Profile} />
                 <Route path="/messages" exact component={Messages} />
                 <Route path="/appointments" exact component={Appointments} />
+                <Route path="/writeReview" exact component={Review} />
                 <Route render={() => (<h1>404 Not found</h1>)} />
               </Switch>
             </Layout>
