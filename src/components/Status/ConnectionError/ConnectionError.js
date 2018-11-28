@@ -15,7 +15,7 @@ const connectionError = (props) => {
         <div className={styles.StatusContainer}>
             <Panel className={styles.Panel}>
                 <img className={styles.Img} alt="" src={errorImg} />
-                <p className={styles.Description}></p>
+                <p className={styles.Description}>Error while connecting to the server</p>
                 {reconnectBtn}
             </Panel>
         </div>
