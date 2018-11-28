@@ -82,12 +82,8 @@ const aptitude = (props)=>{
                     <Panel className={styles.Description}>
                         <p>{props.description}</p>
                     </Panel>
-                    <div className={styles.Calification}>
-                        <Calification 
-                            {...props.calification}
-                        />
-
-                    </div>
+                    
+                        {props.calification.general>0 ? <div className={styles.Calification}><Calification {...props.calification}/></div>: null}
                 </div>
             </div>
             <div>
