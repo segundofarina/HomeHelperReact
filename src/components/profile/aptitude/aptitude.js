@@ -10,14 +10,13 @@ import Modal from 'react-modal'
 const showReviews = (reviews, isOpen,showReviewsClick,hideReviewsClick)=>{
     let firstReviews= reviews.filter((review, index)=>{return index<3}).map(review => {
         return(
-            <div>
+            <div key={review.id}>
                 <Review
                     name = {review.name}
                     date = {review.date}
                     rating ={review.rating}
                     description = {review.description}
                     img = {review.img}
-                    key = {"review"+review.id+" user"}
                 />
                 <hr/>
             </div>
@@ -25,14 +24,13 @@ const showReviews = (reviews, isOpen,showReviewsClick,hideReviewsClick)=>{
     })
     let allReviews = reviews.map((review) => {
         return(
-            <div>
+            <div key={review.id}>
                 <Review
                     name = {review.name}
                     date = {review.date}
                     rating ={review.rating}
                     description = {review.description}
                     img = {review.img}
-                    key ={"allReviews"+review.id}
                 />
                 <hr/>
             </div>

@@ -31,6 +31,7 @@ class Search extends Component {
                             img={defaultImg}
                             calification={provider.generalCalification}
                             id={provider.id}
+                            key={provider.id}
                             />)
             })
 
