@@ -21,12 +21,17 @@ class Profile extends Component {
     state = {
         showingOtherApitutdes : false,
         showReviews: false,
+        idShowing: null,
         loading: true, 
         error: false,
     }
 
-    showReviewsHandler = ()=>{
-        this.setState({showReviews : true})
+    showReviewsHandler = (id)=>{
+        this.setState({
+            showReviews : true,
+            idShowing: id,
+        })
+
     }
 
     closeReviewsHandler = ()=>{
@@ -42,8 +47,13 @@ class Profile extends Component {
         const hide = "Ocultar otras aptitudes"
         let results = aptitudes.filter((aptitude,index)=> {return index>0}).map(aptitude => {
             return(<Aptitude
-                name={aptitude.name}
-                description = {aptitude.description}/>)
+                {...aptitude}
+                showReviesId= {this.state.idShowing}
+                showReviews = {this.state.showReviews}
+                showMoreReviewsClick = {this.showReviewsHandler.bind(this,aptitude.id)}
+                closeReviewsClick = {this.closeReviewsHandler}
+                key = {aptitude.id}
+                />)
         })
         
         return(<div>
@@ -92,15 +102,10 @@ class Profile extends Component {
         if(this.props.apiStatus === apiStatus.API_STATUS_ERROR){
             return (<div>ERROR</div>)
         }
-        const description = "Realizamos: Interiores y frentes de placards Muebles para LCD y Led Alacenas y Bajo mesadas Vanitorys Muebles para chicos Stands Muebles para oficinas Bibliotecas Mesas ratonas Muebles para Playrooms Respaldos y Mesas de luz Reposeras Pergolas y Decks Y todo lo que necesites...siempre cumpliendo lo convenido, asesorándote para lograr el mejor aprovechamiento del espacio y entregando en los plazos acordados. Visita nuestro sitio web: www.tocamaderamuebles.com.ar"
-    
         const coordenates = [{lat: -34.557176, lng: -58.430436},
             {lat: -34.575376, lng: -58.403839},
             {lat: -34.588696, lng: -58.431428}];
 
-        // const aptitudes = [{name : "Carpintero", description: description },
-        //                     {name : "Mecanico", description: description },
-        //                     {name: "Electricista", description: description}]
 
         const provider = this.props.provider
         const serviceTypes = provider.aptitudes.map(apt => {
@@ -129,11 +134,11 @@ class Profile extends Component {
                     <div >
                         <Aptitude
                         {...provider.aptitudes[0]}
-                        // name={aptitudes[0].name}
-                        // description = {aptitudes[0].description}
                         showReviews = {this.state.showReviews}
-                        showMoreReviewsClick = {this.showReviewsHandler}
+                        showReviesId= {this.state.idShowing}
+                        showMoreReviewsClick = {this.showReviewsHandler.bind(this,provider.aptitudes[0].id)}
                         closeReviewsClick = {this.closeReviewsHandler}
+                        key = {provider.aptitudes[0].id}
                         />
                         
                         {provider.aptitudes.length>1 ? this.showMoreAptitudes(provider.aptitudes): null}

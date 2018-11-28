@@ -17,7 +17,7 @@ const showReviews = (reviews, isOpen,showReviewsClick,hideReviewsClick)=>{
                     rating ={review.rating}
                     description = {review.description}
                     img = {review.img}
-                    key= {review.id}
+                    key = {"review"+review.id+" user"}
                 />
                 <hr/>
             </div>
@@ -32,7 +32,7 @@ const showReviews = (reviews, isOpen,showReviewsClick,hideReviewsClick)=>{
                     rating ={review.rating}
                     description = {review.description}
                     img = {review.img}
-                    key={review.id}
+                    key ={"allReviews"+review.id}
                 />
                 <hr/>
             </div>
@@ -87,12 +87,6 @@ const aptitude = (props)=>{
                     <div className={styles.Calification}>
                         <Calification 
                             {...props.calification}
-                            // general={4}
-                            // quality={4.5}
-                            // price={4.9}
-                            // puncutality={4.2}
-                            // treatment= {3.8}
-                            // cleanness={2.9}
                         />
 
                     </div>
