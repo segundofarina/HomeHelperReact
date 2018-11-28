@@ -30,6 +30,7 @@
 .ShowMore{
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .ShowMore h4{

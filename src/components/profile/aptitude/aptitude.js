@@ -78,7 +78,7 @@ const aptitude = (props)=>{
         <div>
             <div>
                 <div className={styles.Header}>
-                    <h3>{props.name}</h3>
+                    <h3>{props.serviceType.name}</h3>
                 </div>
                 <div className={styles.Container}>
                     <Panel className={styles.Description}>
@@ -86,12 +86,13 @@ const aptitude = (props)=>{
                     </Panel>
                     <div className={styles.Calification}>
                         <Calification 
-                            general={4}
-                            quality={4.5}
-                            price={4.9}
-                            puncutality={4.2}
-                            treatment= {3.8}
-                            cleanness={2.9}
+                            {...props.calification}
+                            // general={4}
+                            // quality={4.5}
+                            // price={4.9}
+                            // puncutality={4.2}
+                            // treatment= {3.8}
+                            // cleanness={2.9}
                         />
 
                     </div>

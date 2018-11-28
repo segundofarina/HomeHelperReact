@@ -13,7 +13,7 @@ const Calification = (props)=>{
             <h5>Precio:</h5>
             <ProgressBar value={props.price*20} label={props.price}/>
             <h5>Puntualidad:</h5>
-            <ProgressBar value={props.puncutality*20} label={props.puncutality}/>
+            <ProgressBar value={props.punctuality*20} label={props.punctuality}/>
             <h5>Trato:</h5>
             <ProgressBar value={props.treatment*20} label={props.treatment}/>
             <h5>Liempiza:</h5>
