@@ -6,22 +6,30 @@ import Home from './containers/home/Home'
 import Search from './containers/search/Search'
 import Profile from './containers/profile/Profile'
 import Messages from './containers/messages/Messages'
+import Login from './containers/login/Login'
+import Appointments from './containers/appointments/Appointments'
+import Review from './containers/review/Review'
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <div className={styles.app}>
-          <Layout>
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/search" exact component={Search} />
-              <Route path="/profile" exact component={Profile} />
-              <Route path="/messages" exact component={Messages} />
-              <Route render={() => (<h1>404 Not found</h1>)} />
-            </Switch>
-          </Layout>
-        </div>
+          <Switch>
+            <Route path="/login" exact component={Login} />
+            <Layout>
+              <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/search" exact component={Search} />
+                <Route path="/profile" exact component={Profile} />
+                <Route path="/messages" exact component={Messages} />
+                <Route path="/appointments" exact component={Appointments} />
+                <Route path="/writeReview" exact component={Review} />
+                <Route render={() => (<h1>404 Not found</h1>)} />
+              </Switch>
+            </Layout>
+          </Switch>
+       </div>
       </BrowserRouter>
    );
   }
