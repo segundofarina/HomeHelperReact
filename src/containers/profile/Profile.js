@@ -13,7 +13,8 @@ import * as ProfileActions from '../../store/actions/profileActions'
 import * as apiStatus from '../../store/apiStatus'
 import {withRouter} from 'react-router-dom'
 import queryString from 'query-string'
-
+import Loading from '../../components/Status/Loading/Loading'
+import ConnectionError from '../../components/Status/ConnectionError/ConnectionError'
 
 class Profile extends Component {
     state = {
@@ -88,13 +89,13 @@ class Profile extends Component {
 
     render(){
         if(this.state.loading || this.props.apiStatus === apiStatus.API_STATUS_LOADING){
-            return (<div>Loading ...</div>)
+            return (<Loading/>)
         }
         if(this.state.error ){
             return(<div>BAD REQUEST</div>)
         }
         if(this.props.apiStatus === apiStatus.API_STATUS_ERROR){
-            return (<div>ERROR</div>)
+            return (<ConnectionError/>)
         }
         const coordenates = [{lat: -34.557176, lng: -58.430436},
             {lat: -34.575376, lng: -58.403839},
