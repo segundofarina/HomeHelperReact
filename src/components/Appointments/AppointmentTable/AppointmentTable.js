@@ -14,13 +14,16 @@ const appointmentTable = (props) => {
         const columns = [...row.columns]
         columns[4] = (<Badge type={columns[4].type}>{columns[4].value}</Badge>)
         if(columns.length > 5) {
-            columns[5] = (
-                <Button btnImpl='Link' to='/writeReview' btnType='XSmall' btnColor='Blue'>
-                    <FontAwesomeIcon icon={faEdit} className={styles.ReviewIcon} />
-                    Write review
-                </Button>
-            )
-        }
+            console.log(columns[5])
+            if(columns[5] !== null) {
+                columns[5] = (
+                    <Button btnImpl='Link' to='/writeReview' btnType='XSmall' btnColor='Blue'>
+                        <FontAwesomeIcon icon={faEdit} className={styles.ReviewIcon} />
+                        Write review
+                    </Button>
+                )
+            }
+       }
         return {
             id: row.id,
             columns: columns,

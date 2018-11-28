@@ -12,6 +12,7 @@ import searchDataReducer from './store/reducers/searchDataReducer'
 import searchResultsReducer from './store/reducers/searchResultsReducer'
 import chatReducer from './store/reducers/chatReducer'
 import profileReducer from './store/reducers/profileReducer'
+import appointmentsReducer from './store/reducers/appointmentsReducer'
 
 axios.defaults.baseURL = 'http://localhost:8080/api'
 
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
     searchResults: searchResultsReducer,
     chat: chatReducer,
     profile: profileReducer,
+    appointments: appointmentsReducer,
 })
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
