@@ -16,8 +16,6 @@ import queryString from 'query-string'
 
 
 class Profile extends Component {
-
-
     state = {
         showingOtherApitutdes : false,
         showReviews: false,
@@ -25,7 +23,6 @@ class Profile extends Component {
         loading: true, 
         error: false,
     }
-
     showReviewsHandler = (id)=>{
         this.setState({
             showReviews : true,
@@ -45,7 +42,7 @@ class Profile extends Component {
     showMoreAptitudes = (aptitudes)=>{
         const show = "Mostrar otras aptitudes"
         const hide = "Ocultar otras aptitudes"
-        let results = aptitudes.filter((aptitude,index)=> {return index>0}).map(aptitude => {
+        let results = aptitudes.map(aptitude => {
             return(<Aptitude
                 {...aptitude}
                 showReviesId= {this.state.idShowing}
@@ -56,12 +53,13 @@ class Profile extends Component {
                 />)
         })
         
-        return(<div>
-        <div onClick={this.toggleClick} className={styles.ShowMore}>
-            <h4>{this.state.showingOtherApitutdes ? hide : show}</h4>
-            <FontAwesomeIcon icon={faAngleDown}/>
-        </div>
-        {this.state.showingOtherApitutdes? results:null}
+        return(
+        <div>
+            <div onClick={this.toggleClick} className={styles.ShowMore}>
+                <h4>{this.state.showingOtherApitutdes ? hide : show}</h4>
+                <FontAwesomeIcon icon={faAngleDown}/>
+            </div>
+            {this.state.showingOtherApitutdes? results:null}
         </div>
 
         )}
@@ -84,10 +82,6 @@ class Profile extends Component {
         }
 
         this.setState({loading:false})
-
-        
-       
-
     }
 
 
@@ -108,21 +102,30 @@ class Profile extends Component {
 
 
         const provider = this.props.provider
+        const searched = provider.aptitudes.filter((aptitude) => parseInt(aptitude.serviceType.id) === parseInt(this.props.serviceTypeSelected)).find(()=>true)
+        const firstAptitude = searched ? searched : provider.aptitudes.find(()=>true)
+        const otherAptitudes = provider.aptitudes.filter((aptitude) => parseInt(aptitude.serviceType.id) !== parseInt(firstAptitude.serviceType.id))
+
         const serviceTypes = provider.aptitudes.map(apt => {
             return apt.serviceType.name
         })
-        const serviceTypesOptions = provider.aptitudes.map(apt => {
-            return {value:apt.serviceType.name , name:apt.serviceType.name}
+        const defaultServiceType = {value: firstAptitude.serviceType.id ,name: firstAptitude.serviceType.name}
+        const serviceTypesOptions = otherAptitudes.map(apt => {
+            return {value:apt.serviceType.id , name:apt.serviceType.name}
         })
 
-        return (<div className={this.state.showReviews ? styles.Overflow : null}>
+        
+        
+        console.log(firstAptitude)
+
+        return (<div>
             <Summary name={`${provider.firstName} ${provider.lastName}`} serviceTypes={serviceTypes.join(", ")} rating={provider.generalCalification} img={defaultImg}/>
             <div className={styles.MainContainer}>
                 <div className={styles.Contact}>
                     <Contact
-                    serviceTypesOptions={serviceTypesOptions}
-                    providerName = {provider.firstName}
-
+                        serviceTypesOptions={serviceTypesOptions}
+                        providerName = {provider.firstName}
+                        defaultServiceType = {defaultServiceType}
                     />
                 </div>
                 <div className={styles.Content}>
@@ -133,15 +136,15 @@ class Profile extends Component {
                     </div>
                     <div >
                         <Aptitude
-                        {...provider.aptitudes[0]}
-                        showReviews = {this.state.showReviews}
-                        showReviesId= {this.state.idShowing}
-                        showMoreReviewsClick = {this.showReviewsHandler.bind(this,provider.aptitudes[0].id)}
-                        closeReviewsClick = {this.closeReviewsHandler}
-                        key = {provider.aptitudes[0].id}
+                            {...firstAptitude}
+                            showReviews = {this.state.showReviews}
+                            showReviesId= {this.state.idShowing}
+                            showMoreReviewsClick = {this.showReviewsHandler.bind(this,firstAptitude.id)}
+                            closeReviewsClick = {this.closeReviewsHandler}
+                            key = {provider.aptitudes[0].id}
                         />
                         
-                        {provider.aptitudes.length>1 ? this.showMoreAptitudes(provider.aptitudes): null}
+                        {otherAptitudes.length>0 ? this.showMoreAptitudes(otherAptitudes): null}
                     </div>
                     <div>
                         <h3>Area de trabajo</h3>
@@ -163,13 +166,15 @@ const mapStateToProp = (state) =>{
         provider: state.profile.provider,
         providers: state.searchResults.providers,
         apiStatus: state.profile.status,
+        serviceTypeSelected: state.searchData.serviceType,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         updateProfile: (provider) =>dispatch(ProfileActions.updateProfile(provider)),
-        profileInit: (id) => dispatch(ProfileActions.profileInit(id))
+        profileInit: (id) => dispatch(ProfileActions.profileInit(id)),
+
     }
 }
 

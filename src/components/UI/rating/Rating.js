@@ -3,9 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { faStarHalfAlt } from '@fortawesome/free-solid-svg-icons'
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons'
-
+import styles from './Rating.module.css'
 const rating = (props) => {
     const value = props.value
+    
+    if(value === 0) {
+        return (<p className={styles.emptyCalification}>Aun no hay calificaciones</p>)
+    }
 
     let rating = []
     let stars= parseInt(value,10) 
@@ -32,6 +36,7 @@ const rating = (props) => {
             rating.push(<FontAwesomeIcon icon={farStar} key={i} />)
         }
     }
+    
 
     return (
         <div className={props.className}>
