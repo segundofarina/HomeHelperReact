@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './Review.module.css'
-import Panel from '../../components/UI/Panel/Panel'
 import AppointmentDetails from '../../components/Review/AppointmentDetails/AppointmentDetails'
+import WriteReview from '../../components/Review/WriteReview/WriteReview'
 
 class Review extends Component {
 
@@ -14,9 +14,7 @@ class Review extends Component {
                                         date='28/11/2018'
                                         description='Description'
                                         calification={3} />
-                    <Panel className={styles.Panel}>
-                        Review
-                    </Panel>
+                    <WriteReview />
                 </div>
             </div>
         )   
