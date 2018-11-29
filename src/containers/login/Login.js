@@ -3,6 +3,8 @@ import styles from './Login.module.css'
 import { Link, withRouter } from 'react-router-dom'
 import Logo from '../../assets/img/HHLogo.png'
 import Button from '../../components/UI/Button/Button'
+import { connect } from 'react-redux'
+import * as userDataActions from '../../store/actions/userDataActions'
 
 class Login extends Component {
 
@@ -32,6 +34,7 @@ class Login extends Component {
         /* Sign up with the api */
 
         /* On success */
+        this.props.authenticateUser()
         this.props.history.replace('/')
 
         /* On Failure */
@@ -73,4 +76,10 @@ class Login extends Component {
     }
 }
 
-export default withRouter(Login)
+const mapDispatchToProps = dispatch => {
+    return {
+        authenticateUser: () => dispatch(userDataActions.updateAuthenticated(true))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(Login))

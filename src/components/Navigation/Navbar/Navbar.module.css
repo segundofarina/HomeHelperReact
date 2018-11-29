@@ -1,7 +1,6 @@
 .navBar {
     flex-shrink: 0;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     height: 50px;
     width: 100%;
@@ -41,6 +40,7 @@
     transition: 0.3s ease-in-out;
     text-decoration: none;
     border: 2px solid #73879c;
+    margin: auto;
     margin-right: 50px;
 }
 

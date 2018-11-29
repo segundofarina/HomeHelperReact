@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import styles from './App.module.css'
 import Layout from './hoc/Layout/Layout'
 import Home from './containers/home/Home'
@@ -9,6 +9,9 @@ import Messages from './containers/messages/Messages'
 import Login from './containers/login/Login'
 import Appointments from './containers/appointments/Appointments'
 import Review from './containers/review/Review'
+
+import ProviderDashboard from './containers/provider/dashboard/Dashboard'
+import ProviderMessages from './containers/provider/messages/Messages'
 
 class App extends Component {
   render() {
