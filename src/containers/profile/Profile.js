@@ -115,9 +115,6 @@ class Profile extends Component {
             return {value:apt.serviceType.id , name:apt.serviceType.name}
         })
 
-        
-        
-        console.log(firstAptitude)
 
         return (<div>
             <Summary name={`${provider.firstName} ${provider.lastName}`} serviceTypes={serviceTypes.join(", ")} rating={provider.generalCalification} img={defaultImg}/>

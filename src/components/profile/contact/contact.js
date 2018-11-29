@@ -10,32 +10,35 @@ import 'moment/locale/es'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import 'react-day-picker/lib/style.css'
 import dayPickerStyles from './dayPickerStyles.css'
+import {connect} from 'react-redux'
+import * as ContactActions from '../../../store/actions/contactActions'
 
 
 class Contact extends Component {
 
     state = {
-        serviceType: null,
-        date: null,
-        description: null,
+        serviceType: this.props.defaultServiceType.value,
+        date: new Date(),
+        description: "",
     }
 
     dayPickerRef = React.createRef();
 
 
     onDateClickHandler = (day, modifiers, e)=>{
-        console.log(day)
         this.setState({date:day})
     }
 
     serviceTypeClickHandler = (event)=>{
-        console.log(event.target.value)
-        this.setState({date:event.target.value})
+        this.setState({serviceType:event.target.value})
     }
 
     descriptionChangeHandler = (event)=>{
-        console.log(event.target.value)
         this.setState({description:event.target.value})
+    }
+
+    contactClickHandler = ()=>{
+        this.props.updateContact(this.state.serviceType,this.state.date,this.state.description)
     }
 
     showDayPicker= ()=>{
@@ -47,10 +50,6 @@ class Contact extends Component {
 
     
     render(){
-        const defaultValue = {
-            value: '',
-            name: 'Select a service type',
-        }
         return(<Panel className={styles.Panel}>
                 <h4>Contactese con {this.props.providerName}</h4>
                 <Input inputType="select"
@@ -67,10 +66,12 @@ class Contact extends Component {
                             className={dayPickerStyles.DayPicker}
                             inputProps={{ style: { width: '100%' } }}
                             ref={this.dayPickerRef}
+                            onDayChange={this.onDateClickHandler}
+                            selectedDays={this.state.date}
                             formatDate={formatDate}
                             parseDate={parseDate}
                             format="LL"
-                            placeholder={`${formatDate(new Date(), 'LL', window.navigator.language)}`}
+                            placeholder={"Seleccione una fecha ..."}
                             dayPickerProps={{
                                 locale: window.navigator.language,
                                 localeUtils: MomentLocaleUtils,
@@ -88,11 +89,25 @@ class Contact extends Component {
                     className={styles.InputText}
                     onChange={this.descriptionChangeHandler} />
 
-                <Button className={styles.Button}>
+                <Button 
+                    className={styles.Button}
+                    onClick={this.contactClickHandler}>
                     Contactar
                 </Button>
         </Panel>
         )}
 }
 
-export default Contact
+const mapStateToProp = (state) =>{
+    return {
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateContact: (serviceType,date,description) =>dispatch(ContactActions.updateContact(serviceType,date,description)),
+
+    }
+}
+
+export default connect(null,mapDispatchToProps)(Contact)
