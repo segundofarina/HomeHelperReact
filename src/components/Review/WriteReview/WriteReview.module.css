@@ -64,3 +64,9 @@
     margin: 0;
     font-weight: 600;
 }
+
+.ErrorAlert {
+    margin-top: 2em;
+    font-style: italic;
+    font-size: 12px;
+}

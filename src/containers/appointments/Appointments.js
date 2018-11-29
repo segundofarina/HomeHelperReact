@@ -69,7 +69,6 @@ class Appointments extends Component {
             return appointment.status.id === 3 || appointment.status.id === 4
         }).map(appointment => {
             const reviewBtn = appointment.hasReview ? null : appointment.id
-            console.log(reviewBtn)
             return {
                 id: appointment.id,
                 columns: [
