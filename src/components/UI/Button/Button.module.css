@@ -29,6 +29,10 @@
     border-color: #2e6da4;
 }
 
+.Dark {
+    background-color: #6c757d;
+}
+
 .Small{
     font-size: 12px;
     line-height: 1.5;
@@ -44,4 +48,20 @@
     line-height: 1.5;
     border-radius: 3px;
     font-weight: 500;
+}
+
+.Warning {
+    background-color: #f0ad4e;
+}
+
+.Success {
+    background-color: #5cb85c;
+}
+
+.Danger {
+    background-color: #d9534f;
+}
+
+.Info {
+    background-color: #5bc0de;
 }

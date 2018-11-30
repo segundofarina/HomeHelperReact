@@ -26,7 +26,7 @@ export const appointmentsInit = () => {
     return async dispatch => {
         dispatch(appointmentsLoading())
         try {
-            const response = await axios.get('/appointments')
+            const response = await axios.get('/user/appointments')
             dispatch(saveAppointments(response.data.appointments))
         } catch(error) {
             console.log(error)

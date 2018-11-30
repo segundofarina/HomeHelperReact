@@ -1,0 +1,28 @@
+.Appointments {
+    width: 100%;
+    flex: 1;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+}
+
+.ProfilePicture {
+    height: 38px;
+    width: 38px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.ActionBtns {
+    margin: 0;
+}
+
+.AcceptBtn {
+    margin: 0;
+    margin-left: 10px;
+}
+
+.ActionBtnsContainer {
+    display: flex;
+    justify-content: flex-end;
+}
