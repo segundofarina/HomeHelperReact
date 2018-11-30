@@ -52,6 +52,35 @@ class DropdownBtn extends Component {
             headerStylesArr.push(styles.open)
         }
 
+        let firstItem = (
+            <DropdownItemBtn to="/createProvider"
+                            onClick={this.closeList}>
+                Crear perfil del proveedor
+            </DropdownItemBtn>
+        )
+        if(this.props.isProvider) {
+            firstItem = (
+                <DropdownItemBtn to="/provider"
+                                onClick={() => {
+                                    this.closeList()
+                                    this.props.handleUseAsProvider(true)
+                                }}>
+                    Usar como proveedor
+                </DropdownItemBtn>
+            )
+        }
+        if(this.props.showingProvider) {
+            firstItem = (
+                <DropdownItemBtn to="/"
+                                onClick={() => {
+                                    this.closeList()
+                                    this.props.handleUseAsProvider(false)
+                                }}>
+                    Usar como cliente
+                </DropdownItemBtn>
+            )
+        }
+
         return (
             <div ref={this.setWrapperRef}>
                 <div className={headerStylesArr.join(' ')}
@@ -61,11 +90,8 @@ class DropdownBtn extends Component {
                     <FontAwesomeIcon icon={faChevronDown} className={styles.dropdownIcon} />
                 </div>
                 <div className={listStylesArr.join(' ')}>
-                    <DropdownItemBtn to="/createProvider"
-                                    onClick={this.closeList}>
-                        Crear perfil del proveedor
-                    </DropdownItemBtn>
-                    <DropdownItemBtn to="/settings"
+                    {firstItem}
+                   <DropdownItemBtn to="/settings"
                                     onClick={this.closeList}>
                         Configuracion
                     </DropdownItemBtn>
