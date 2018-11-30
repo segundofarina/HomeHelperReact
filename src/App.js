@@ -9,7 +9,13 @@ import Messages from './containers/messages/Messages'
 import Login from './containers/login/Login'
 import Appointments from './containers/appointments/Appointments'
 import Review from './containers/review/Review'
+import ProviderDashboard from './containers/provider/dashboard/Dashboard'
+import ProviderMessages from './containers/provider/messages/Messages'
+import ProviderAppointments from './containers/provider/appointments/Appointments'
+import ProviderProgress from './containers/provider/progress/Progress'
+
 import Test from './containers/testing/testing'
+
 
 class App extends Component {
   render() {
@@ -26,6 +32,12 @@ class App extends Component {
                 <Route path="/messages" exact component={Messages} />
                 <Route path="/appointments" exact component={Appointments} />
                 <Route path="/writeReview" exact component={Review} />
+
+                <Route path="/provider" exact component={ProviderDashboard} />
+                <Route path="/provider/messages" exact component={ProviderMessages} />
+                <Route path="/provider/appointments" exact component={ProviderAppointments} />
+                <Route path="/provider/progress" exact component={ProviderProgress} />
+
                 <Route path="/test" exact component={Test}/>
                 <Route render={() => (<h1>404 Not found</h1>)} />
               </Switch>

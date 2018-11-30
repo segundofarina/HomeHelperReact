@@ -3,8 +3,8 @@ import * as actionTypes from '../actions/actionTypes'
 const initialState = {
     showingProvider: false,
     jwt: '',
-    authenticated: false,
-    isProvider: true,
+    authenticated: true, //just for testing
+    isProvider: true, //just for testing
 }
 
 const reducer = (state = initialState, action) => {
