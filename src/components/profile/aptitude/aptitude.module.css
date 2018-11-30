@@ -69,13 +69,22 @@ hr:last-of-type{
     top:85px;
     background-color: #fff;
 
-
+    animation: modalAnimation 0.5s ease-in-out;
     position: absolute;
     border: 1px solid rgba(0,0,0,.2); 
     overflow-x: hidden;
     overflow-y:auto;
     border-radius: 4px;
     outline: none;
+}
+
+@keyframes modalAnimation{
+    0%{
+        transform: translateY(-100vh);
+    }
+    100%{
+        transform: translateY(0);
+    }
 }
 
 .ModalOverlay{
@@ -87,7 +96,16 @@ hr:last-of-type{
     background-color: rgba(255, 255, 255, 0.75);
     display: flex;
     justify-content: center;
-   
+   animation: modalOverlayAnimation 0.4s ease-in-out; 
+}
+
+@keyframes modalOverlayAnimation{
+    0%{
+        opacity:0;
+    }
+    100%{
+        opacity: 1;
+    }
 }
 
 .ReactModal__Body--open {

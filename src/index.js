@@ -12,6 +12,7 @@ import searchDataReducer from './store/reducers/searchDataReducer'
 import searchResultsReducer from './store/reducers/searchResultsReducer'
 import chatReducer from './store/reducers/chatReducer'
 import profileReducer from './store/reducers/profileReducer'
+import contactReducer from './store/reducers/contactReducer'
 import appointmentsReducer from './store/reducers/appointmentsReducer'
 import userDataReducer from './store/reducers/userDataReducer'
 
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
     searchResults: searchResultsReducer,
     chat: chatReducer,
     profile: profileReducer,
+    contact: contactReducer,
     appointments: appointmentsReducer,
     userData: userDataReducer,
 })
