@@ -87,11 +87,13 @@ class Appointments extends Component {
                 <AppointmentTable className={styles.Content}
                                     title="Pending Appointments"
                                     headers={pendingColumnsHeaders}
-                                    rows={pendingRows} />
+                                    rows={pendingRows}
+                                    emptyDescription='No pending appointments...' />
                 <AppointmentTable className={styles.Content}
                                     title="Completed Appointments"
                                     headers={doneColumnsHeaders}
-                                    rows={doneRows} />
+                                    rows={doneRows}
+                                    emptyDescription='No completed appointments...' />
             </div>
         )
     }

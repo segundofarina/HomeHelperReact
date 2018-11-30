@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styles from './AppointmentTable.module.css'
 import Panel from '../../UI/Panel/Panel'
 import Table from '../../UI/Table/Table'
@@ -6,6 +6,7 @@ import Badge from '../../UI/Badge/Badge'
 import Button from '../../UI/Button/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import emptyImg from '../../../assets/img/grua.png'
 
 const appointmentTable = (props) => {
     const elemStyles = [props.className, styles.AppointmentTable]
@@ -30,17 +31,30 @@ const appointmentTable = (props) => {
         }
     })
 
+    let tableElem = (
+        <div className={styles.TableContainer}>
+            <Table headers={props.headers}
+                    rows={rows} />
+        </div>
+    )
+
+    if(rows.length === 0) {
+        tableElem = (
+            <Fragment>
+                <img className={styles.Img} src={emptyImg} alt="" />
+                <p className={styles.Description}>{props.emptyDescription}</p>
+            </Fragment>
+        )
+    }
+
     return (
         <div className={elemStyles.join(' ')}>
-            <Panel>
+            <Panel className={styles.Panel}>
                 <div className={styles.Title}>
                     <h3>{props.title}</h3>
                 </div>
-                <div className={styles.TableContainer}>
-                    <Table headers={props.headers}
-                            rows={rows} />
-                </div>
-            </Panel>
+                {tableElem}
+           </Panel>
         </div>
     )
 }
