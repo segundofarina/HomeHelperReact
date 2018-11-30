@@ -18,6 +18,11 @@ import Test from './containers/testing/testing'
 
 
 class App extends Component {
+  /* If no user data in redux check for remember me token or already logged in user after refresh
+   * While not user data in redux show loading page
+   * Ask to the api for user data according to token in local storage
+   * Show page */
+
   render() {
     return (
       <BrowserRouter>

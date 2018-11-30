@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes'
 
 const initialState = {
-    showingProvider: false,
+    showingProvider: true,
     jwt: '',
     authenticated: true, //just for testing
     isProvider: true, //just for testing

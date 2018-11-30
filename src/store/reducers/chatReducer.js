@@ -3,9 +3,10 @@ import * as apiStatus from '../apiStatus'
 
 const initialState = {
     currentChat: null,
-    idCounter: 11,
+    idCounter: 0,
     status: apiStatus.API_STATUS_NONE,
     chats: [],
+    usingAsClient: true,
 }
 
 const reducer = (state = initialState, action) => {
@@ -63,6 +64,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 chats: getUpdatedChatListWithoutIsNew(state.chats),
+            }
+        case actionTypes.CHAT_UPDATE_USING_AS_CLIENT:
+            return {
+                ...state,
+                usingAsClient: action.payload.usingAsClient
             }
         default:
             return state

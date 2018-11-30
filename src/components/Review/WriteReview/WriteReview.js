@@ -46,6 +46,7 @@ class writeReview extends Component {
                     punctuality: this.state.punctuality,
                 },
             })
+            console.log(response)
             this.props.history.replace('/appointments')
         } catch (error) {
             console.log(error)

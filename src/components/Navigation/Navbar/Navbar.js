@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import * as userDataActions from '../../../store/actions/userDataActions'
 
 const navBar = (props) => {
+
     let NavbarLinks = (<Link className={styles.loginButton} to="/login">Iniciar Sesion</Link>)
 
     if(props.authenticated) {

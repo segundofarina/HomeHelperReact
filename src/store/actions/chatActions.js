@@ -50,12 +50,23 @@ export const saveChats = (chats) => {
     }
 }
 
-export const chatInit = () => {
+const chatInitDefault = {
+    usingAsClient: true,
+}
+
+export const chatInit = (args = chatInitDefault) => {
     return async dispatch => {
         dispatch(loadingChats())
+        dispatch(currentChatUpdate(null))
+
+        let path = '/messages'
+        if(!args.usingAsClient) {
+            path += '?provider=true'
+        }
+
         /* Async fetch the api */
         try {
-            const resp = await axios.get('/messages')
+            const resp = await axios.get(path)
             const chats = resp.data.chats
             dispatch(saveChats(chats))
         } catch(error) {
@@ -68,5 +79,14 @@ export const chatInit = () => {
 export const chatUpdateIsNewMsg = () => {
     return {
         type: actionTypes.CHAT_UPDATE_IS_NEW_MSG,
+    }
+}
+
+export const chatUpdateUsingAsClient = (useAsClient) => {
+    return {
+        type: actionTypes.CHAT_UPDATE_USING_AS_CLIENT,
+        payload: {
+            usingAsClient: useAsClient,
+        }
     }
 }

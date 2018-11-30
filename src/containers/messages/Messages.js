@@ -18,7 +18,8 @@ class Messages extends Component {
     token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aW5jaG92aWN0b3J5IiwianRpIjoiMSJ9.5jxlU2uCoV_xWl9IAL-CDPJePYUSmXe-CNlPifNUBU5b4guDWJT6eHCMKuXUdZp6AEQ4Tc0BQ-e6Hjg4DSiMXg'
 
     componentDidMount() {
-        if(this.props.status === apiStatus.API_STATUS_NONE) {
+        if(this.props.status === apiStatus.API_STATUS_NONE || !this.props.usingAsClient) {
+            this.props.chatUseAsClient()
             this.props.chatInit()
         }
     }
@@ -30,22 +31,28 @@ class Messages extends Component {
     handleRecvMsg = (msg) => {
         console.log('recv: ')
         console.log(msg)
-        this.props.chatRecvMsg(msg.username, msg.text)
+        if(msg.usingAsClient) {
+            this.props.chatRecvMsg(msg.username, msg.text) 
+        }
     }
-
+    
     handleSendMsg = (msg) => {
-        this.websocketRef.current.sendMessage('/app/messages', JSON.stringify(msg), {'X-Authorization' : this.token})
+            const clientMsg = {
+            ...msg,
+            usingAsClient: true,
+        }
+        this.websocketRef.current.sendMessage('/app/messages', JSON.stringify(clientMsg), {'X-Authorization' : this.token})
     }
 
     handleSocketConnect = () => {
         if(!this.state.socketConnected) {
-            this.setState({socketConnected: true})
+            //this.setState({socketConnected: true})
         }
     }
 
     handleSocketDisconnect = () => {
         if(this.state.socketConnected) {
-            this.setState({socketConnected: false})
+            //this.setState({socketConnected: false})
             this.props.chatUpdateIsNewMsg()
         }
     }
@@ -129,6 +136,7 @@ const mapStateToProps = state => {
         currentChat: state.chat.currentChat,
         chats: state.chat.chats,
         status: state.chat.status,
+        usingAsClient: state.chat.usingAsClient,
     }
 }
 
@@ -138,6 +146,7 @@ const mapDispatchToProps = dispatch => {
         chatRecvMsg: (username, msg) => dispatch(chatActions.chatRecvMsg(username, msg)),
         chatInit: () => dispatch(chatActions.chatInit()),
         chatUpdateIsNewMsg: () => dispatch(chatActions.chatUpdateIsNewMsg()),
+        chatUseAsClient: () => dispatch(chatActions.chatUpdateUsingAsClient(true))
     }
 }
 
