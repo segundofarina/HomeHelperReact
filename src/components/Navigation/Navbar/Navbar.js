@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Navbar.module.css'
 import hhLogo from '../../../assets/img/HHLogo.png'
+import hhLogoPink from '../../../assets/img/HHLogoPink.png'
 import MenuBtns from './MenuBtns/MenuBtns'
 import { connect } from 'react-redux'
 import * as userDataActions from '../../../store/actions/userDataActions'
@@ -27,7 +28,7 @@ const navBar = (props) => {
     if(props.showingProvider) {
         title = (
             <Link className={styles.title} to="/provider">
-                <img src={hhLogo} alt="logo" />
+                <img src={hhLogoPink} alt="logo" />
             </Link>
         )
     }

@@ -7,27 +7,25 @@
     flex-direction: column;
 }
 
-.Panel {
+.Container {
     margin-bottom: 20px;
-    padding-right: 15px;
-    padding-left: 15px;
     margin-top: 20px;
 }
 
 @media (min-width: 768px) {
-    .Panel {
+    .Container {
         width: 750px;
     }
 }
 
 @media (min-width: 992px) {
-    .Panel {
+    .Container {
         width: 970px;
     }
 }
 
 @media (min-width: 1200px) {
-    .Panel {
+    .Container {
         width: 1170px;
     }
 }

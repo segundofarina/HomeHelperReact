@@ -21,5 +21,9 @@
 }
 
 .Button.Active {
-    color: #52b7a3;
+    color: #FE4C89;
+}
+
+.Button:hover {
+    background: #e4e4e4;
 }

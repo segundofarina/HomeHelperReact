@@ -15,11 +15,11 @@ const menuBtns = (props) => {
         btnsStyles.push(styles.MenuBtnsProvider)
         btns = (
             <Fragment>
-                <MenuBtn exact to="/provider" key='3'>Inicio</MenuBtn>
-                <MenuBtn to="/provider/messages" key='4'>Mensajes</MenuBtn>
-                <MenuBtn to="/provider/appointments" key='5'>Citas</MenuBtn>
-                <MenuBtn to="/provider/progress" key='6'>Progreso</MenuBtn>
-                <MenuBtn to="/provider/profile" key='7'>Perfil</MenuBtn>
+                <MenuBtn exact to="/provider" key='3' showingProvider>Inicio</MenuBtn>
+                <MenuBtn to="/provider/messages" key='4' showingProvider>Mensajes</MenuBtn>
+                <MenuBtn to="/provider/appointments" key='5' showingProvider>Citas</MenuBtn>
+                <MenuBtn to="/provider/progress" key='6' showingProvider>Progreso</MenuBtn>
+                <MenuBtn to="/provider/profile" key='7' showingProvider>Perfil</MenuBtn>
             </Fragment>
         )
     }

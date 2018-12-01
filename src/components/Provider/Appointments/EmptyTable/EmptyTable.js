@@ -2,7 +2,6 @@ import React from 'react'
 import styles from './EmptyTable.module.css'
 import Panel from '../../../UI/Panel/Panel'
 import emptyImg from '../../../../assets/img/grua.png'
-import Button from '../../../UI/Button/Button'
 
 const emptyTable = (props) => {
     return (

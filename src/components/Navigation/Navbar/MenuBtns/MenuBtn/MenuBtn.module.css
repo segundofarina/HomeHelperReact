@@ -41,3 +41,7 @@
     left: 0;
     right: 0;
 }
+
+.MenuBtn.Provider:before {
+    background: #FE4C89;
+}
