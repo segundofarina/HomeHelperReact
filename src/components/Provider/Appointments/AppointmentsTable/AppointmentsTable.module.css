@@ -1,8 +1,6 @@
 .AppointmentTable {
     margin-bottom: 20px;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 @media (min-width: 768px) {

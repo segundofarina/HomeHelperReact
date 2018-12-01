@@ -10,6 +10,7 @@ import defaultImg from '../../../assets/img/defaultProfile.png'
 import Badge from '../../../components/UI/Badge/Badge'
 import Button from '../../../components/UI/Button/Button'
 import EmptyTable from '../../../components/Provider/Appointments/EmptyTable/EmptyTable'
+import MultiButton from '../../../components/UI/MultiButton/MultiButton'
 
 class Appointments extends Component {
     state = {
@@ -66,12 +67,12 @@ class Appointments extends Component {
         }
 
         let title = 'Pending Appointments'        
-        let changeBtnDescription = 'Show Completed Appointment'
+        let changeBtnActive = 1
         let noResultsDescription = 'No pending appointments...'
 
         if(!this.state.showingPending) {
             title='Completed Appointments'
-            changeBtnDescription = 'Show Pending Appointments'
+            changeBtnActive = 2
             noResultsDescription = 'No completed appointments...'
         }
 
@@ -135,24 +136,40 @@ class Appointments extends Component {
  
         }
 
+        const multiButtonItems = [{
+            id: 1,
+            text: 'Pending Appointments',
+            onClick: this.changeBtnHandler,
+        }, {
+            id: 2,
+            text: 'Completed Appointments',
+            onClick: this.changeBtnHandler,
+        }]
+
         if(rows.length === 0) {
             return (
                 <div className={styles.Appointments}>
-                    <EmptyTable title={title}
-                                changeBtnDescription={changeBtnDescription}
-                                changeBtnOnClick={this.changeBtnHandler}
-                                description={noResultsDescription} />
-                </div>
+                    <div>
+                        <h2 className={styles.SectionTitle}>Appointments</h2>
+                        <MultiButton elements={multiButtonItems} active={changeBtnActive} className={styles.Multibutton} />
+                        <EmptyTable title={title}
+                                        changeBtnOnClick={this.changeBtnHandler}
+                                        description={noResultsDescription} />
+                    </div>
+               </div>
             )
         }
 
         return (
             <div className={styles.Appointments}>
-                <AppointmentsTable title={title}
-                                    changeBtnDescription={changeBtnDescription}
-                                    changeBtnOnClick={this.changeBtnHandler}
-                                    headers={this.state.headers}
-                                    rows={rows} />
+                <div>
+                    <h2 className={styles.SectionTitle}>Appointments</h2>
+                    <MultiButton elements={multiButtonItems} active={changeBtnActive} className={styles.Multibutton} />
+                    <AppointmentsTable title={title}
+                                        changeBtnOnClick={this.changeBtnHandler}
+                                        headers={this.state.headers}
+                                        rows={rows} />
+                </div>
             </div>
         )
     }

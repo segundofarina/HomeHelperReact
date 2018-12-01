@@ -10,12 +10,6 @@ const emptyTable = (props) => {
             <Panel className={styles.Panel}>
                 <div className={styles.Title}>
                     <h3>{props.title}</h3>
-                    <Button btnType='Small' 
-                            className={styles.ChangeBtn}
-                            btnColor='Dark' 
-                            onClick={props.changeBtnOnClick}>
-                        {props.changeBtnDescription}
-                    </Button>
                 </div>
                 <img className={styles.Img} src={emptyImg} alt="" />
                 <p className={styles.Description}>{props.description}</p>

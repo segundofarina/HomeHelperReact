@@ -2,4 +2,42 @@
     width: 100%;
     flex: 1;
     background: #f7f7f7;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Panel {
+    margin-bottom: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+    .Panel {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .Panel {
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .Panel {
+        width: 1170px;
+    }
+}
+
+.SectionTitle {
+    margin-top: 40px;
+    margin-bottom: 0;
+}
+
+.Multibutton {
+    margin-left: 20px;
+    margin-top: 20px;
 }
