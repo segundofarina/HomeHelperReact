@@ -6,33 +6,28 @@ import Reviews from '../../../components/Provider/Progress/Reviews/Reviews'
 
 class Progress extends Component {
     state = {
-        showingScores: true,
+        showingSection: 1,
     }
 
-    handleBtnChange = () => {
-        this.setState((prevState) => {return {showingScores: !prevState.showingScores}})
+    handleBtnChange = (id) => {
+        this.setState({showingSection: id})
     }
 
     render() {
         const multibuttons = [{
             id: 1,
             text: 'Scores',
-            onClick: this.handleBtnChange,
+            onClick: () => {this.handleBtnChange(1)},
         }, {
             id: 2,
             text: 'Reviews',
-            onClick: this.handleBtnChange,
+            onClick: () => {this.handleBtnChange(2)},
         }]
-
-        let changeBtnActive = 1
-        if(!this.state.showingScores) {
-            changeBtnActive = 2
-        }
 
         let element = (
             <Scores />
         )
-        if(!this.state.showingScores) {
+        if(this.state.showingSection === 2) {
             element = (
                 <Reviews />
             )
@@ -42,7 +37,7 @@ class Progress extends Component {
             <div className={styles.Progress}>
                 <div>
                     <h2 className={styles.SectionTitle}>Progress</h2>
-                    <MultiButton elements={multibuttons} active={changeBtnActive} className={styles.Multibutton} />
+                    <MultiButton elements={multibuttons} active={this.state.showingSection} className={styles.Multibutton} />
                     <div className={styles.Container}>
                         {element}
                     </div>

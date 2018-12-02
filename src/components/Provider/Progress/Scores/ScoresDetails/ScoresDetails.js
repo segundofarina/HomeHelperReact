@@ -21,43 +21,38 @@ class ScoresDetails extends Component {
     }
 
     render () {
-        const details = {
-            _1: 0,
-            _2: 0,
-            _3: 0,
-            _4: 3,
-            _5: 10,
-            total: 13,
-        }
-
         return (
             <Panel className={styles.ScoresDetails}>
                 <ScoreRow className={styles.ScoreRow}
                             description='Quality'
                             showingDetails={this.state.quality}
                             onClick={() => this.handleRowClick('quality')}
-                            details={details} />
+                            details={this.props.details.quality}
+                            total={this.props.details.total} />
                 <ScoreRow className={styles.ScoreRow}
                             description='Price'
                             showingDetails={this.state.price}
                             onClick={() => this.handleRowClick('price')}
-                            details={details} />
+                            details={this.props.details.price}
+                            total={this.props.details.total} />
                 <ScoreRow className={styles.ScoreRow}
                             description='Punctuality'
                             showingDetails={this.state.punctuality}
                             onClick={() => this.handleRowClick('punctuality')}
-                            details={details}  />
+                            details={this.props.details.punctuality}
+                            total={this.props.details.total}  />
                 <ScoreRow className={styles.ScoreRow}
                             description='Treatment'
                             showingDetails={this.state.treatment}
                             onClick={() => this.handleRowClick('treatment')}
-                            details={details}  />
+                            details={this.props.details.punctuality}
+                            total={this.props.details.total}  />
                 <ScoreRow className={styles.ScoreRow}
                             description='Cleanness'
                             showingDetails={this.state.cleanness}
                             onClick={() => this.handleRowClick('cleanness')}
-                            details={details}  />
- 
+                            details={this.props.details.cleanness}
+                            total={this.props.details.total}  />
             </Panel>
         )
     }

@@ -14,7 +14,7 @@ import MultiButton from '../../../components/UI/MultiButton/MultiButton'
 
 class Appointments extends Component {
     state = {
-        showingPending: true,
+        showingSection: 1,
         headers: [null, 'Name', 'Date', 'Address', 'Service Type', 'Status', null]
     }
 
@@ -31,18 +31,19 @@ class Appointments extends Component {
         }
     }
 
-    changeBtnHandler = () => {
-        if(this.state.showingPending) {
-            this.setState({
-                showingPending: false,
-                headers: [null, 'Name', 'Date', 'Address', 'Service Type', 'Status'],
-            })
-        } else {
-            this.setState({
-                showingPending: true,
-                headers: [null, 'Name', 'Date', 'Address', 'Service Type', 'Status', null],
-            })
+    changeBtnHandler = (id) => {
+        if(this.state.showingSection === id) {
+            return
         }
+
+        let headers = [null, 'Name', 'Date', 'Address', 'Service Type', 'Status', null]
+        if(this.state.showingSection === 2) {
+            headers = [null, 'Name', 'Date', 'Address', 'Service Type', 'Status']
+        }
+        this.setState({
+            showingSection: id,
+            headers: headers,
+        })
     }
 
     handleAcceptAppointment = () => {
@@ -67,12 +68,10 @@ class Appointments extends Component {
         }
 
         let title = 'Pending Appointments'        
-        let changeBtnActive = 1
         let noResultsDescription = 'No pending appointments...'
 
-        if(!this.state.showingPending) {
+        if(this.state.showingSection === 2) {
             title='Completed Appointments'
-            changeBtnActive = 2
             noResultsDescription = 'No completed appointments...'
         }
 
@@ -139,11 +138,11 @@ class Appointments extends Component {
         const multiButtonItems = [{
             id: 1,
             text: 'Pending Appointments',
-            onClick: this.changeBtnHandler,
+            onClick: () => this.changeBtnHandler(1),
         }, {
             id: 2,
             text: 'Completed Appointments',
-            onClick: this.changeBtnHandler,
+            onClick: () => this.changeBtnHandler(2),
         }]
 
         if(rows.length === 0) {
@@ -151,7 +150,7 @@ class Appointments extends Component {
                 <div className={styles.Appointments}>
                     <div>
                         <h2 className={styles.SectionTitle}>Appointments</h2>
-                        <MultiButton elements={multiButtonItems} active={changeBtnActive} className={styles.Multibutton} />
+                        <MultiButton elements={multiButtonItems} active={this.state.showingSection} className={styles.Multibutton} />
                         <EmptyTable title={title}
                                         changeBtnOnClick={this.changeBtnHandler}
                                         description={noResultsDescription} />
@@ -164,7 +163,7 @@ class Appointments extends Component {
             <div className={styles.Appointments}>
                 <div>
                     <h2 className={styles.SectionTitle}>Appointments</h2>
-                    <MultiButton elements={multiButtonItems} active={changeBtnActive} className={styles.Multibutton} />
+                    <MultiButton elements={multiButtonItems} active={this.state.showingSection} className={styles.Multibutton} />
                     <AppointmentsTable title={title}
                                         changeBtnOnClick={this.changeBtnHandler}
                                         headers={this.state.headers}
