@@ -15,7 +15,6 @@ class Messages extends Component {
     }
 
     websocketRef = React.createRef()
-    token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aW5jaG92aWN0b3J5IiwianRpIjoiMSJ9.5jxlU2uCoV_xWl9IAL-CDPJePYUSmXe-CNlPifNUBU5b4guDWJT6eHCMKuXUdZp6AEQ4Tc0BQ-e6Hjg4DSiMXg'
 
     componentDidMount() {
         if(this.props.status === apiStatus.API_STATUS_NONE || !this.props.usingAsClient) {
@@ -41,7 +40,7 @@ class Messages extends Component {
             ...msg,
             usingAsClient: true,
         }
-        this.websocketRef.current.sendMessage('/app/messages', JSON.stringify(clientMsg), {'X-Authorization' : this.token})
+        this.websocketRef.current.sendMessage('/app/messages', JSON.stringify(clientMsg), {'X-Authorization' : this.props.token})
     }
 
     handleSocketConnect = () => {
@@ -109,8 +108,8 @@ class Messages extends Component {
                                     ref={this.websocketRef} 
                                     topics={["/user/queue/messages"]} 
                                     onMessage={this.handleRecvMsg} 
-                                    headers={{ "X-Authorization": this.token }} 
-                                    subscribeHeaders={{ "X-Authorization": this.token}}
+                                    headers={{ "X-Authorization": this.props.token }} 
+                                    subscribeHeaders={{ "X-Authorization": this.props.token}}
                                     autoReconnect
                                     onConnect={this.handleSocketConnect}
                                     onDisconnect={this.handleSocketDisconnect} />
@@ -137,6 +136,7 @@ const mapStateToProps = state => {
         chats: state.chat.chats,
         status: state.chat.status,
         usingAsClient: state.chat.usingAsClient,
+        token: state.userData.userData.token,
     }
 }
 

@@ -29,11 +29,12 @@ const menuBtns = (props) => {
             <div className={styles.NavBtnContainer}>
                 {btns}
             </div>
-            <DropdownBtn name="Segundo" 
+            <DropdownBtn name={props.firstName}
                 img=""
                 isProvider={props.isProvider}
                 showingProvider={props.showingProvider}
-                handleUseAsProvider={props.handleUseAsProvider} />
+                handleUseAsProvider={props.handleUseAsProvider}
+                handleLogOut={props.handleLogOut} />
         </div>
     )
 }

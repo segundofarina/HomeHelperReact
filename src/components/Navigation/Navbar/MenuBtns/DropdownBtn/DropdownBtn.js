@@ -92,12 +92,17 @@ class DropdownBtn extends Component {
                 <div className={listStylesArr.join(' ')}>
                     {firstItem}
                    <DropdownItemBtn to="/settings"
-                                    onClick={this.closeList}>
+                                    onClick={() => {
+                                        this.closeList()
+                                    }}>
                         Configuracion
                     </DropdownItemBtn>
                     <DropdownItemBtn icon="logout"
-                                    to="/logout"
-                                    onClick={this.closeList}>
+                                    to="/"
+                                    onClick={() => {
+                                        this.closeList()
+                                        this.props.handleLogOut()
+                                    }}>
                         Cerrar Sesion
                     </DropdownItemBtn>
                 </div>

@@ -6,6 +6,7 @@ import hhLogoPink from '../../../assets/img/HHLogoPink.png'
 import MenuBtns from './MenuBtns/MenuBtns'
 import { connect } from 'react-redux'
 import * as userDataActions from '../../../store/actions/userDataActions'
+import { withRouter } from 'react-router-dom'
 
 const navBar = (props) => {
 
@@ -15,7 +16,9 @@ const navBar = (props) => {
         NavbarLinks = (
             <MenuBtns isProvider={props.isProvider}
                     showingProvider={props.showingProvider}
-                    handleUseAsProvider={props.useAsProvider} />
+                    handleUseAsProvider={props.useAsProvider}
+                    firstName={props.firstName}
+                    handleLogOut={props.logOut} />
         )
     }
 
@@ -45,14 +48,16 @@ const mapStateToProps = state => {
     return {
         showingProvider: state.userData.showingProvider,
         authenticated: state.userData.authenticated,
-        isProvider: state.userData.isProvider,
+        isProvider: state.userData.userData.isProvider,
+        firstName: state.userData.userData.firstName,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        useAsProvider: (showingProvider) => dispatch(userDataActions.updateUsingProvider(showingProvider))
+        useAsProvider: (showingProvider) => dispatch(userDataActions.updateUsingProvider(showingProvider)),
+        logOut: () => dispatch(userDataActions.logOut())
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(navBar)
+export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(withRouter(navBar))

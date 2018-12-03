@@ -5,6 +5,7 @@ import Logo from '../../assets/img/HHLogo.png'
 import Button from '../../components/UI/Button/Button'
 import { connect } from 'react-redux'
 import * as userDataActions from '../../store/actions/userDataActions'
+import * as apiStatus from '../../store/apiStatus'
 
 class Login extends Component {
 
@@ -31,19 +32,37 @@ class Login extends Component {
     handleSubmit = () => {
         /* Validate form */
         console.log(this.state)
+
         /* Sign up with the api */
-
-        /* On success */
-        this.props.authenticateUser()
-        this.props.history.replace('/')
-
-        /* On Failure */
-        // Show error
+        this.props.performLogin(this.state.username, this.state.password)
     }
 
     render() {
+        let loadingElem = null
+        if(this.props.apiCall.status === apiStatus.API_STATUS_LOADING) {
+            loadingElem = (<div>Loading</div>)
+        }
+
+        let errorElem = null
+        if(this.props.apiCall.status === apiStatus.API_STATUS_ERROR) {
+            const errorCode = this.props.apiCall.errorCode
+            if(errorCode === 404) {
+                errorElem = (<div>Connection to server failed</div>)
+            } else if(errorCode === 401) {
+                errorElem = (<div>Bad credentials</div>)
+            } else {
+                errorElem = (<div>Oh oh error</div>)
+            }
+        }
+
+        if(this.props.apiCall.status === apiStatus.API_STATUS_DONE) {
+            this.props.history.replace('/')
+        }
+
         return (
             <div className={styles.LoginContainer}>
+                {loadingElem}
+                {errorElem}
                 <div className={styles.Form}>
                     <Link to="/" className={styles.Link}>
                         <img className={styles.Logo} src={Logo} alt="" />
@@ -76,10 +95,17 @@ class Login extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
     return {
-        authenticateUser: () => dispatch(userDataActions.updateAuthenticated(true))
+        apiCall: state.userData.apiCall,
     }
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(Login))
+const mapDispatchToProps = dispatch => {
+    return {
+        authenticateUser: () => dispatch(userDataActions.updateAuthenticated(true)),
+        performLogin: (username, password) => dispatch(userDataActions.performLogin(username, password))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login))
