@@ -38,7 +38,7 @@ class App extends Component {
     }
 
     return (
-      <BrowserRouter>
+      <BrowserRouter basename='/paw-2018a-4'>
         <div className={styles.app}>
           <Switch>
             <Route path="/login" exact component={Login} />
