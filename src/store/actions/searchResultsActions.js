@@ -23,14 +23,11 @@ export const searchResultsUpdateDone = (providers, currentPage) => {
     }
 }
 
-export const searchResultsUpdate = (location, serviceType) => {
+export const searchResultsUpdate = (serviceType, coords) => {
     return async dispatch => {
         dispatch(searchResultsUpdateLoading())
 
-        let url = `/providers?st=${serviceType}`
-        if(location) {
-            url += `&location=${location}`
-        }
+        let url = `/providers?st=${serviceType}&lat=${coords.lat}&lng=${coords.lng}`
  
         /* Async code to fetch new results */
         try {
