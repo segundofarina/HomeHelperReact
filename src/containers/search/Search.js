@@ -9,6 +9,10 @@ import NoResultsSearch from '../../components/Search/NoResultsSearch/NoResultsSe
 import LoadingResults from '../../components/Search/LoadingResults/LoadingResults'
 import { connect } from 'react-redux'
 import * as apiStatus from '../../store/apiStatus'
+import { withRouter } from 'react-router-dom'
+import queryString from 'query-string'
+import * as searchDataActions from '../../store/actions/searchDataActions'
+import * as searchResultsActions from '../../store/actions/searchResultsActions'
 
 class Search extends Component {
 
@@ -16,6 +20,25 @@ class Search extends Component {
         /* if api status is none the user enter the page without pressing search btn.
             show error msg asking to do a search */
         let results = (<EmptySearch />)
+
+        /* Check if there is value in the url to perform the search */
+        if(this.props.searchResults.status === apiStatus.API_STATUS_NONE) {
+            /* Get query params */
+            const queryParams = queryString.parse(this.props.location.search)
+            const serviceType = queryParams.st
+            const location = queryParams.addr ? atob(queryParams.addr) : queryParams.addr
+            const coords = {
+                lat: queryParams.lat,
+                lng: queryParams.lng,
+            }
+
+            /* If all values set update search form and call api */
+            if(serviceType && location && coords.lat && coords.lng) {
+                this.props.searchDataUpdate(location, serviceType, coords)
+                this.props.searchResultsUpdate(serviceType, coords)
+                return (<LoadingResults />)
+            }
+        }
 
         /* if api status is done show results. if no results show empty results error */
         if(this.props.searchResults.status === apiStatus.API_STATUS_DONE) {
@@ -71,4 +94,11 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Search)
+const mapDispatchToProps = dispatch => {
+    return {
+        searchDataUpdate: (location, serviceType, coords) => dispatch(searchDataActions.searchDataUpdate(location, serviceType, coords)),
+        searchResultsUpdate: (serviceType, coords) => dispatch(searchResultsActions.searchResultsUpdate(serviceType, coords)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Search))

@@ -66,7 +66,7 @@ class Search extends Component {
         /* Validate form fields */
         this.props.searchDataUpdate(this.state.location, this.state.serviceType, this.state.coords)
         this.props.searchResultsUpdate(this.state.serviceType, this.state.coords)
-        this.props.history.push(`/search?st=${this.state.serviceType}&lat=${this.state.coords.lat}&lng=${this.state.coords.lng}&addr=${this.state.location}`)
+        this.props.history.push(`/search?st=${this.state.serviceType}&lat=${this.state.coords.lat}&lng=${this.state.coords.lng}&addr=${btoa(this.state.location)}`)
     }
 
     render () {

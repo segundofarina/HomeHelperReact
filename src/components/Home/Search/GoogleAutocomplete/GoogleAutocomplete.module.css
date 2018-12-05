@@ -33,10 +33,10 @@
 
 .SuggestionsContainer {
     position: absolute;
-    border-radius: 0 0 5px 5px;
     width: 100%;
     background: #fff;
     margin-top: 2px;
+    border-radius: 5px;
 }
 
 .SuggestionsContainer.Active {
@@ -53,9 +53,18 @@
 }
 
 .ItemStyles.Active {
-    background-color: #f3f3f3;
+    background-color: #26b99a;
+    color: #fff;
 }
 
 .ItemStyles:last-of-type {
     border-bottom: none;
+}
+
+.ItemStyles.Active:first-of-type {
+    border-radius: 5px 5px 0 0;
+}
+
+.ItemStyles.Active:last-of-type {
+    border-radius: 0 0 5px 5px;
 }
