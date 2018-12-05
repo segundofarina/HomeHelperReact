@@ -12,6 +12,7 @@ import 'react-day-picker/lib/style.css'
 import dayPickerStyles from './dayPickerStyles.css'
 import {connect} from 'react-redux'
 import * as ContactActions from '../../../store/actions/contactActions'
+import { withRouter } from 'react-router-dom'
 
 
 class Contact extends Component {
@@ -20,6 +21,7 @@ class Contact extends Component {
         serviceType: this.props.defaultServiceType.value,
         date: new Date(),
         description: "",
+        serviceTypeText: this.props.defaultServiceType.name,
     }
 
     dayPickerRef = React.createRef();
@@ -30,15 +32,23 @@ class Contact extends Component {
     }
 
     serviceTypeClickHandler = (event)=>{
-        this.setState({serviceType:event.target.value})
+        this.setState({serviceType:event.target.value, serviceTypeText: event.target.options[event.target.selectedIndex].text})
     }
 
     descriptionChangeHandler = (event)=>{
         this.setState({description:event.target.value})
     }
 
-    contactClickHandler = ()=>{
-        this.props.updateContact(this.state.serviceType,this.state.date,this.state.description)
+    contactClickHandler = () => {
+        this.props.updateContact(this.state.serviceTypeText, this.state.date, this.state.description, {
+            firstName: this.props.provider.firstName,
+            lastName: this.props.provider.lastName,
+            score: this.props.provider.score,
+            imgUrl: this.props.provider.imgUrl,
+            id: this.props.provider.id,
+        })
+        this.props.sendAppointment()//pasarle los datos para la api
+        this.props.history.push('/appointmentConfirmed')
     }
 
     showDayPicker= ()=>{
@@ -47,7 +57,6 @@ class Contact extends Component {
     hideDayPicker = ()=>{
         this.dayPickerRef.current.showDayPicker()
     }
-
     
     render(){
         return(<Panel className={styles.Panel}>
@@ -98,16 +107,11 @@ class Contact extends Component {
         )}
 }
 
-const mapStateToProp = (state) =>{
-    return {
-    }
-}
-
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateContact: (serviceType,date,description) =>dispatch(ContactActions.updateContact(serviceType,date,description)),
-
+        updateContact: (serviceType, date, description, provider) => dispatch(ContactActions.updateContact(serviceType, date, description, provider)),
+        sendAppointment: () => dispatch(ContactActions.sendAppointment())
     }
 }
 
-export default connect(null,mapDispatchToProps)(Contact)
+export default connect(null,mapDispatchToProps)(withRouter(Contact))

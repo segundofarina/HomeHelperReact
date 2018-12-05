@@ -145,8 +145,8 @@ class Profile extends Component {
         if(firstAptitudeReviews.length > 0) {
             firstAptitudeReviews = firstAptitudeReviews[0].reviews
         }
-
-        return (<div className={styles.Profile}>
+ 
+         return (<div className={styles.Profile}>
             <Summary name={`${provider.firstName} ${provider.lastName}`} serviceTypes={serviceTypes.join(", ")} rating={provider.generalCalification} img={defaultImg}/>
             <div className={styles.MainContainer}>
                 <div className={styles.Contact}>
@@ -154,6 +154,13 @@ class Profile extends Component {
                         serviceTypesOptions={serviceTypesOptions}
                         providerName = {provider.firstName}
                         defaultServiceType = {defaultServiceType}
+                        provider={{
+                            firstName: this.props.provider.firstName,
+                            lastName: this.props.provider.lastName,
+                            imgUrl: 'toBeCompleted in Profile.js',
+                            score: this.props.provider.generalCalification,
+                            id: this.props.provider.id,
+                        }}
                     />
                 </div>
                 <div className={styles.Content}>

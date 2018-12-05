@@ -11,6 +11,7 @@ import Messages from './containers/messages/Messages'
 import Login from './containers/login/Login'
 import Appointments from './containers/appointments/Appointments'
 import Review from './containers/review/Review'
+import AppointmentConfirmed from './containers/appointmentConfirmed/AppointmentConfirmed'
 import Forbidden from './components/Errors/Forbidden/Forbidden'
 import Loading from './components/Status/Loading/Loading'
 
@@ -51,6 +52,7 @@ class App extends Component {
                 <PrivateRoute path="/messages" exact component={Messages} authenticated={this.props.isAuthenticated} />
                 <PrivateRoute path="/appointments" exact component={Appointments} authenticated={this.props.isAuthenticated} />
                 <PrivateRoute path="/writeReview" exact component={Review} authenticated={this.props.isAuthenticated} />
+                <PrivateRoute path="/appointmentConfirmed" exact component={AppointmentConfirmed} authenticated={this.props.isAuthenticated} />
 
                 <PrivateRoute path="/provider" exact component={ProviderDashboard} authenticated={this.props.isProvider} />
                 <PrivateRoute path="/provider/messages" exact component={ProviderMessages} authenticated={this.props.isProvider} />
