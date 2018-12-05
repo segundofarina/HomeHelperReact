@@ -97,10 +97,6 @@ class Profile extends Component {
         if(this.props.apiStatus === apiStatus.API_STATUS_ERROR){
             return (<ConnectionError/>)
         }
-        const coordenates = [{lat: -34.557176, lng: -58.430436},
-            {lat: -34.575376, lng: -58.403839},
-            {lat: -34.588696, lng: -58.431428}];
-
 
         const provider = this.props.provider
         const searched = provider.aptitudes.filter((aptitude) => parseInt(aptitude.serviceType.id) === parseInt(this.props.serviceTypeSelected)).find(()=>true)
@@ -148,7 +144,7 @@ class Profile extends Component {
                         <h3>Area de trabajo</h3>
                         <Panel>
                             <WorkingZone
-                                coordenates={coordenates}
+                                coordenates={provider.coordenates}
                             />
                         </Panel>
                     </div>
