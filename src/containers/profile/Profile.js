@@ -15,6 +15,7 @@ import {withRouter} from 'react-router-dom'
 import queryString from 'query-string'
 import Loading from '../../components/Status/Loading/Loading'
 import ConnectionError from '../../components/Status/ConnectionError/ConnectionError'
+import axios from 'axios'
 
 class Profile extends Component {
     state = {
@@ -23,27 +24,37 @@ class Profile extends Component {
         idShowing: null,
         loading: true, 
         error: false,
+        reviews: [],
+        reviewsApiStatus: apiStatus.API_STATUS_NONE,
+        providerId: '',
     }
-    showReviewsHandler = (id)=>{
+
+    showReviewsHandler = (id) => {
         this.setState({
             showReviews : true,
             idShowing: id,
         })
-
     }
 
-    closeReviewsHandler = ()=>{
+    closeReviewsHandler = () => {
         this.setState({showReviews : false})
     }
 
-    toggleClick = ()=>{
+    toggleClick = () => {
         this.setState({showingOtherApitutdes: !this.state.showingOtherApitutdes})
     }
 
-    showMoreAptitudes = (aptitudes)=>{
+    showMoreAptitudes = (aptitudes) => {
         const show = "Mostrar otras aptitudes"
         const hide = "Ocultar otras aptitudes"
         let results = aptitudes.map(aptitude => {
+            let reviews = this.state.reviews.filter(aptitudeReviews => {
+                return aptitudeReviews.aptitudeId === aptitude.id
+            })
+            if(reviews.length > 0) {
+                reviews = reviews[0].reviews
+            }
+
             return(<Aptitude
                 {...aptitude}
                 showReviesId= {this.state.idShowing}
@@ -51,6 +62,9 @@ class Profile extends Component {
                 showMoreReviewsClick = {this.showReviewsHandler.bind(this,aptitude.id)}
                 closeReviewsClick = {this.closeReviewsHandler}
                 key = {aptitude.id}
+                reviews={reviews}
+                reviewsApiStatus={this.state.reviewsApiStatus}
+                reviewsReconnect={() => this.fetchReviews(this.state.providerId)}
                 />)
         })
         
@@ -63,29 +77,43 @@ class Profile extends Component {
             {this.state.showingOtherApitutdes? results:null}
         </div>
 
-        )}
+        )
+    }
+
+    fetchReviews = async (providerId) => {
+        this.setState({reviewsApiStatus: apiStatus.API_STATUS_LOADING})
+        try {
+            const response = await axios.get(`/providers/${providerId}/reviews`)
+            this.setState({
+                reviewsApiStatus: apiStatus.API_STATUS_DONE,
+                reviews: response.data.reviews,
+            })
+        } catch (error) {
+            console.log(error)
+            this.setState({reviewsApiStatus: apiStatus.API_STATUS_ERROR})
+        }
+    }
 
     componentDidMount (){
         const queries = queryString.parse(this.props.location.search)
         if(!queries.id){
             this.setState({
                 error:true,
-                loading:false
+                loading:false,
             })
             return
         }
         const provider = this.props.providers.filter(provider => provider.id === parseInt(queries.id))
         if(provider[0]){
             this.props.updateProfile(provider[0])
-            
         }else{
             this.props.profileInit(queries.id)
         }
 
-        this.setState({loading:false})
+        this.setState({loading:false, providerId: parseInt(queries.id)})
+
+        this.fetchReviews(parseInt(queries.id));
     }
-
-
 
     render(){
         if(this.state.loading || this.props.apiStatus === apiStatus.API_STATUS_LOADING){
@@ -111,8 +139,14 @@ class Profile extends Component {
             return {value:apt.serviceType.id , name:apt.serviceType.name}
         })
 
+        let firstAptitudeReviews = this.state.reviews.filter(aptitudeReviews => {
+            return aptitudeReviews.aptitudeId === firstAptitude.id
+        })
+        if(firstAptitudeReviews.length > 0) {
+            firstAptitudeReviews = firstAptitudeReviews[0].reviews
+        }
 
-        return (<div>
+        return (<div className={styles.Profile}>
             <Summary name={`${provider.firstName} ${provider.lastName}`} serviceTypes={serviceTypes.join(", ")} rating={provider.generalCalification} img={defaultImg}/>
             <div className={styles.MainContainer}>
                 <div className={styles.Contact}>
@@ -132,10 +166,13 @@ class Profile extends Component {
                         <Aptitude
                             {...firstAptitude}
                             showReviews = {this.state.showReviews}
-                            showReviesId= {this.state.idShowing}
+                            showReviewsId= {this.state.idShowing}
                             showMoreReviewsClick = {this.showReviewsHandler.bind(this,firstAptitude.id)}
                             closeReviewsClick = {this.closeReviewsHandler}
                             key = {provider.aptitudes[0].id}
+                            reviews={firstAptitudeReviews}
+                            reviewsApiStatus={this.state.reviewsApiStatus}
+                            reviewsReconnect={() => this.fetchReviews(this.state.providerId)}
                         />
                         
                         {otherAptitudes.length>0 ? this.showMoreAptitudes(otherAptitudes): null}
