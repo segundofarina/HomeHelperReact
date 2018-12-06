@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import styles from './Search.module.css'
 import Button from '../../UI/Button/Button'
 import Input from '../../UI/Input/Input'
 import Panel from '../../UI/Panel/Panel'
@@ -9,16 +10,45 @@ import * as searchDataActions from '../../../store/actions/searchDataActions'
 import * as searchResultsActions from '../../../store/actions/searchResultsActions'
 import GoogleAutocomplete from './GoogleAutocomplete/GoogleAutocomplete'
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import FormValidator from '../../../FormValidator/FormValidator'
 
 class Search extends Component {
+
+    /* Form validation */
+    validator = new FormValidator([
+        {
+            field: 'location',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Please fill a valid address'
+        },{
+            field: 'serviceType',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Please select a service type'
+        },{
+            field: 'lat',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Please fill a valid address'
+        },{
+            field: 'lng',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Please fill a valid address',
+        }
+    ])
+
+    submitted = false
 
     state = {
         location: this.props.keepMemory ? this.props.searchData.location : '',
         serviceType: this.props.keepMemory ? this.props.searchData.serviceType : '',
         coords: {
-            lat: '',
-            lng: '',
+            lat: this.props.keepMemory ? this.props.searchData.coords.lat : '',
+            lng: this.props.keepMemory ? this.props.searchData.coords.lng : '',
         },
+        validation: this.validator.valid(),
     }
 
     componentDidMount() {
@@ -33,9 +63,6 @@ class Search extends Component {
     }
 
     locationSelectHandler = (address, placeId) => {
-        if(placeId) {
-            console.log(address)
-        }
         this.setState({location: address})
         this.getLatLng(address)
     }
@@ -63,11 +90,25 @@ class Search extends Component {
     }
 
     onSubmitSearchHandler = () => {
-        /* Validate form fields */
-        this.props.searchDataUpdate(this.state.location, this.state.serviceType, this.state.coords)
-        this.props.searchResultsUpdate(this.state.serviceType, this.state.coords)
-        this.props.history.push(`/search?st=${this.state.serviceType}&lat=${this.state.coords.lat}&lng=${this.state.coords.lng}&addr=${btoa(this.state.location)}`)
+        const validation = this.validator.validate({
+            location: this.state.location,
+            serviceType: this.state.serviceType,
+            lat: this.state.coords.lat,
+            lng: this.state.coords.lng,
+            validation: this.state.validation,
+        })
+
+        this.setState({validation})
+        this.submitted = true
+        if(validation.isValid) {
+            this.props.searchDataUpdate(this.state.location, this.state.serviceType, this.state.coords)
+            this.props.searchResultsUpdate(this.state.serviceType, this.state.coords)
+            this.props.history.push(`/search?st=${this.state.serviceType}&lat=${this.state.coords.lat}&lng=${this.state.coords.lng}&addr=${btoa(this.state.location)}`)
+        }
     }
+
+
+    
 
     render () {
         const defaultValue = {
@@ -75,19 +116,55 @@ class Search extends Component {
             name: 'Select a service type',
         }
 
+        /* if the form has been submitted at least once
+            then check validity every time we render                   
+            otherwise just use what's in state */
+        let validation = this.submitted ?              
+                        this.validator.validate({
+                            location: this.state.location,
+                            serviceType: this.state.serviceType,
+                            lat: this.state.coords.lat,
+                            lng: this.state.coords.lng,
+                            validation: this.state.validation,
+                        }) : this.state.validation  
+
+        const locationStyles = [styles.FormGroup]
+        if(validation.location.isInvalid || validation.lat.isInvalid || validation.lng.isInvalid) {
+            locationStyles.push(styles.ValidationError)
+        }
+        
+        const serviceTypeStyles = [styles.FormGroup]
+        if(validation.serviceType.isInvalid) {
+            serviceTypeStyles.push(styles.ValidationError)
+        }
+
+        let locationValidationMsg = validation.location.message
+        if(locationValidationMsg === '') {
+            locationValidationMsg = validation.lat.message
+        }
+        if(locationValidationMsg === '') {
+            locationValidationMsg = validation.lng.message
+        }
+
         return (
             <Panel className={this.props.className}>
-                <GoogleAutocomplete value={this.state.location}
-                                    onChange={this.locationChangeHandler}
-                                    onSelect={this.locationSelectHandler}
-                                    onError={this.googleErrorHandler} />
-                <Input inputType="select"
-                    label="Tipo de servicio"
-                    value={this.state.serviceType}
-                    onChange={this.serviceTypeChangeHandler}
-                    defaultValue={defaultValue}
-                    options={this.props.serviceTypesOptions} />
-                <Button onClick={this.onSubmitSearchHandler}>
+                <div className={locationStyles.join(' ')}>
+                    <GoogleAutocomplete value={this.state.location}
+                                        onChange={this.locationChangeHandler}
+                                        onSelect={this.locationSelectHandler}
+                                        onError={this.googleErrorHandler} />
+                    <div className={styles.ValidationMsg}>{locationValidationMsg}</div> 
+                </div>
+                <div className={serviceTypeStyles.join(' ')}>
+                    <Input inputType="select"
+                            label="Tipo de servicio"
+                            value={this.state.serviceType}
+                            onChange={this.serviceTypeChangeHandler}
+                            defaultValue={defaultValue}
+                            options={this.props.serviceTypesOptions} />
+                    <div className={styles.ValidationMsg}>{validation.serviceType.message}</div> 
+                </div>
+               <Button onClick={this.onSubmitSearchHandler}>
                     Buscar
                 </Button>
             </Panel>

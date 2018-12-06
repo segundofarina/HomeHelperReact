@@ -1,0 +1,13 @@
+.ValidationError input, .ValidationError select, .ValidationError textarea {
+    border: 1px solid #e21313!important;
+}
+
+.ValidationMsg {
+    color: #e21313;
+    font-size: 13px;
+    text-align: center;
+}
+
+.FormGroup {
+    margin-bottom: 15px;
+}
