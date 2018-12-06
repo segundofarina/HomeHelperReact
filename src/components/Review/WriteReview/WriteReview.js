@@ -9,6 +9,8 @@ import Loader from './Loader/Loader'
 import Alert from '../../UI/Alert/Alert'
 import axios from 'axios'
 import FormValidator from '../../../FormValidator/FormValidator';
+import { connect } from 'react-redux'
+import * as appointmentsActions from '../../../store/actions/appointmentsActions'
 
 class writeReview extends Component {
 
@@ -77,8 +79,12 @@ class writeReview extends Component {
                     },
                 }
             })
-            console.log(response)
-            this.props.history.replace('/appointments')
+            if(response.status === 201) {
+                this.props.updateAppointment(this.props.appointmentId)
+                this.props.history.replace('/appointments')
+            } else {
+                this.setState({status: apiStatus.API_STATUS_ERROR})
+            }
         } catch (error) {
             console.log(error)
             this.setState({status: apiStatus.API_STATUS_ERROR})
@@ -176,4 +182,10 @@ class writeReview extends Component {
     }
 }
 
-export default withRouter(writeReview)
+const mapDispatchToProps = dispatch => {
+    return {
+        updateAppointment: (id) => dispatch(appointmentsActions.fetchAppointment(`/users/appointments/${id}`))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(writeReview))

@@ -27,11 +27,29 @@ const reducer = (state = initialState, action) => {
         case actionTypes.APPOINTMENTS_SAVE_APPOINTMENT:
             return {
                 ...state,
-                appointments: [...state.appointments, action.payload.appointment],
+                appointments: saveAppointment(action.payload.appointment, state.appointments),
             }
         default:
             return state
     }
+}
+
+const saveAppointment = (appointment, appointments) => {
+    const newAppointments = []
+    let added = false
+    appointments.forEach(oldAppointment => {
+        if(oldAppointment.id === appointment.id) {
+            newAppointments.push(appointment)
+            added = true
+        } else {
+            newAppointments.push(oldAppointment)
+        }
+    })
+
+    if(!added) {
+        newAppointments.push(appointment)
+    }
+    return newAppointments
 }
 
 export default reducer
