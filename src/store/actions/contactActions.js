@@ -36,7 +36,7 @@ export const sendAppointment = (appointment) => {
     return async dispatch => {
         dispatch(sendAppointmentLoading())
         try {
-            const response = await axios.post('/users/appointments/',appointment)
+            const response = await axios.post('/users/appointments/', appointment)
             console.log(response)
             if(response.status === 201) {
                 dispatch(sendAppointmentSave())

@@ -8,8 +8,36 @@ import * as apiStatus from '../../../store/apiStatus'
 import Loader from './Loader/Loader'
 import Alert from '../../UI/Alert/Alert'
 import axios from 'axios'
+import FormValidator from '../../../FormValidator/FormValidator';
 
 class writeReview extends Component {
+
+    /* Review validation */
+    validateScores = (scores, state) => {
+        if(state.scores.quality === 0 || state.scores.treatment === 0 || state.scores.price === 0 ||
+            state.scores.cleanness === 0 || state.scores.punctuality === 0) {
+            return false
+        }
+        return true
+    }
+
+
+    validator = new FormValidator([
+        {
+            field: 'description',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Please fill a description',
+        },{
+            field: 'scores',
+            method: this.validateScores,
+            validWhen: true,
+            message: 'Please complete all scores for the provider'
+        }
+    ])
+
+    submitted = false
+
     state = {
         quality: 0,
         treatment: 0,
@@ -18,6 +46,7 @@ class writeReview extends Component {
         punctuality: 0,
         description: '',
         status: apiStatus.API_STATUS_NONE,
+        validation: this.validator.valid(),
     }
 
     handleDescriptionChange = (event) => {
@@ -32,19 +61,21 @@ class writeReview extends Component {
         })
     }
 
-    /* TODO: Send appointment id to identify the review */
     sendReviewToApi = async () => {
         this.setState({status: apiStatus.API_STATUS_LOADING})
         try {
-            const response = await axios.post('/reviews', {
-                comment: this.state.description,
-                scores: {
-                    quality: this.state.quality,
-                    treatment: this.state.treatment,
-                    price: this.state.price,
-                    cleanness: this.state.cleanness,
-                    punctuality: this.state.punctuality,
-                },
+            const response = await axios.post(`/providers/${this.props.providerId}/reviews`, {
+                appointmentId: this.props.appointmentId,
+                review: {
+                    comment: this.state.description,
+                    scores: {
+                        quality: this.state.quality,
+                        treatment: this.state.treatment,
+                        price: this.state.price,
+                        cleanness: this.state.cleanness,
+                        punctuality: this.state.punctuality,
+                    },
+                }
             })
             console.log(response)
             this.props.history.replace('/appointments')
@@ -55,14 +86,47 @@ class writeReview extends Component {
     }
 
     handleSendBtn = () => {
-        /* Validate all inputs */
+        const validation = this.validator.validate({
+            description: this.state.description,
+            scores: {
+                quality: this.state.quality,
+                treatment: this.state.treatment,
+                price: this.state.price,
+                cleanness: this.state.cleanness,
+                punctuality: this.state.punctuality,
+            },
+            validation: this.state.validation,
+        })
 
-        /* Send data to the api */
-        this.sendReviewToApi()
-        //this.props.history.replace('/appointments')
+        this.setState({validation})
+        this.submitted = true
+        if(validation.isValid) {
+            this.sendReviewToApi()
+        }
     }
 
     render() {
+         /* if the form has been submitted at least once
+            then check validity every time we render                   
+            otherwise just use what's in state */
+        const validation = this.submitted ?              
+                        this.validator.validate({
+                            description: this.state.description,
+                            scores: {
+                                quality: this.state.quality,
+                                treatment: this.state.treatment,
+                                price: this.state.price,
+                                cleanness: this.state.cleanness,
+                                punctuality: this.state.punctuality,
+                            },
+                            validation: this.state.validation,
+                        }) : this.state.validation  
+
+        const descriptionStyles = [styles.Description]
+        if(validation.description.isInvalid) {
+            descriptionStyles.push(styles.ValidationError)
+        }
+
         let errorMsg = null
         if(this.state.status === apiStatus.API_STATUS_ERROR) {
             errorMsg = (
@@ -74,6 +138,7 @@ class writeReview extends Component {
             <Fragment>
                 {errorMsg}
                 <h5 className={styles.Subtitle}>Califica al proveedor</h5>
+                <div className={styles.ValidationMsg}>{validation.scores.message}</div> 
                 <div className={styles.StarsContainer}>
                     <ReviewItem label='Quality:' rating={this.state.quality} handleChangeRating={(rating) => this.handleQualityChange('quality', rating)} />
                     <ReviewItem label='Treatment:' rating={this.state.treatment} handleChangeRating={(rating) => this.handleQualityChange('treatment', rating)} />
@@ -81,11 +146,12 @@ class writeReview extends Component {
                     <ReviewItem label='Cleanness:' rating={this.state.cleanness} handleChangeRating={(rating) => this.handleQualityChange('cleanness', rating)} />
                     <ReviewItem label='Punctuality:' rating={this.state.punctuality} handleChangeRating={(rating) => this.handleQualityChange('punctuality', rating)} />
                 </div>
-                <div className={styles.Description}>
+                <div className={descriptionStyles.join(' ')}>
                     <label>Write a review</label>
                     <textarea placeholder='Write a review...'
                             value={this.state.description}
                             onChange={this.handleDescriptionChange}></textarea>
+                    <div className={styles.ValidationMsg}>{validation.description.message}</div> 
                 </div>
                 <Button btnType='Small'
                         className={styles.SendBtn}
