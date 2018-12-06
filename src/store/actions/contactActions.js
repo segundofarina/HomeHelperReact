@@ -31,12 +31,16 @@ export const sendAppointmentSave = () => {
     }
 }
 
-export const sendAppointment = () => {
+export const sendAppointment = (appointment) => {
     return async dispatch => {
         dispatch(sendAppointmentLoading())
         try {
-            //Api call
-            dispatch(sendAppointmentSave())
+            const response = await axios.post('/users/appointments/',appointment)
+            if(response.status === 201) {
+                dispatch(sendAppointmentSave())
+            } else {
+                dispatch(sendAppointmentError())
+            }
         } catch(error) {
             console.log(error)
             dispatch(sendAppointmentError())
