@@ -37,7 +37,7 @@ class AppointmentsConfirmed extends Component {
                                         name={`${this.props.provider.firstName} ${this.props.provider.lastName}`}
                                         calification={this.props.provider.score}
                                         serviceType={this.props.serviceType}
-                                        date={this.props.date.toDateString()}
+                                        date={this.props.date}
                                         description={this.props.description} />
                     <Button className={styles.Button}
                             onClick={this.handleBtnClick}>

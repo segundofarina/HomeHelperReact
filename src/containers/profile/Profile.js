@@ -16,6 +16,7 @@ import queryString from 'query-string'
 import Loading from '../../components/Status/Loading/Loading'
 import ConnectionError from '../../components/Status/ConnectionError/ConnectionError'
 import axios from 'axios'
+import BadRequest from '../../components/Errors/BadRequest/BadRequest'
 
 class Profile extends Component {
     state = {
@@ -27,6 +28,7 @@ class Profile extends Component {
         reviews: [],
         reviewsApiStatus: apiStatus.API_STATUS_NONE,
         providerId: '',
+        searchedAddress: '',
     }
 
     showReviewsHandler = (id) => {
@@ -69,14 +71,13 @@ class Profile extends Component {
         })
         
         return(
-        <div>
-            <div onClick={this.toggleClick} className={styles.ShowMore}>
-                <h4>{this.state.showingOtherApitutdes ? hide : show}</h4>
-                <FontAwesomeIcon icon={faAngleDown}/>
+            <div>
+                <div onClick={this.toggleClick} className={styles.ShowMore}>
+                    <h4>{this.state.showingOtherApitutdes ? hide : show}</h4>
+                    <FontAwesomeIcon icon={faAngleDown}/>
+                </div>
+                {this.state.showingOtherApitutdes? results:null}
             </div>
-            {this.state.showingOtherApitutdes? results:null}
-        </div>
-
         )
     }
 
@@ -96,7 +97,13 @@ class Profile extends Component {
 
     componentDidMount (){
         const queries = queryString.parse(this.props.location.search)
-        if(!queries.id){
+        let validAddr = true
+        try {
+            atob(queries.addr)
+        } catch(error) {
+            validAddr = false
+        }
+        if(!queries.id || !queries.addr || !validAddr){
             this.setState({
                 error:true,
                 loading:false,
@@ -110,7 +117,7 @@ class Profile extends Component {
             this.props.profileInit(queries.id)
         }
 
-        this.setState({loading:false, providerId: parseInt(queries.id)})
+        this.setState({loading:false, providerId: parseInt(queries.id), searchedAddress: atob(queries.addr)})
 
         this.fetchReviews(parseInt(queries.id));
     }
@@ -119,8 +126,8 @@ class Profile extends Component {
         if(this.state.loading || this.props.apiStatus === apiStatus.API_STATUS_LOADING){
             return (<Loading/>)
         }
-        if(this.state.error ){
-            return(<div>BAD REQUEST</div>)
+        if(this.state.error) {
+            return(<BadRequest />)
         }
         if(this.props.apiStatus === apiStatus.API_STATUS_ERROR){
             return (<ConnectionError/>)
@@ -161,6 +168,7 @@ class Profile extends Component {
                             score: this.props.provider.generalCalification,
                             id: this.props.provider.id,
                         }}
+                        searchedAddress={this.state.searchedAddress}
                     />
                 </div>
                 <div className={styles.Content}>

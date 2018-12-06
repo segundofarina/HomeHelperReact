@@ -17,6 +17,11 @@ import FormValidator from '../../../FormValidator/FormValidator';
 
 
 class Contact extends Component {
+    isValidDate = (date, state) => {
+        date = Date.parse(date)
+        return !isNaN(date) ? true : false
+    }
+
     yesterdayDate = new Date()
     yesterdayDate = new Date(this.yesterdayDate.setDate(this.yesterdayDate.getDate() - 1))
     validator = new FormValidator([
@@ -31,6 +36,11 @@ class Contact extends Component {
             method: 'isEmpty',
             validWhen: false,
             message: 'Please select a date',   
+        },{
+            field: 'date',
+            method: this.isValidDate,
+            validWhen: true,
+            message: 'Please select a valid date',
         },
         {
             field: 'date',
@@ -75,7 +85,7 @@ class Contact extends Component {
     contactClickHandler = () => {
         const validation = this.validator.validate({
             serviceType: this.state.serviceType,
-            date: '1/1/2019',
+            date: this.isValidDate(this.state.date) ? this.state.date.toDateString() : '',
             description: this.state.description,
             emptyDate: this.state.dateSelected ? 'selected' : '',
         })
@@ -83,7 +93,7 @@ class Contact extends Component {
         this.setState({validation})
         this.submitted = true
         if(validation.isValid) {
-            this.props.updateContact(this.state.serviceTypeText, this.state.date, this.state.description, {
+            this.props.updateContact(this.state.serviceTypeText, convertDate(this.state.date), this.state.description, {
                 firstName: this.props.provider.firstName,
                 lastName: this.props.provider.lastName,
                 score: this.props.provider.score,
@@ -94,7 +104,7 @@ class Contact extends Component {
                 provider: { id: this.props.provider.id },
                 serviceType: { id: this.state.serviceType },
                 date: convertDate(this.state.date),
-                address: 'address',
+                address: this.props.searchedAddress,
                 description: this.state.description,
             })//pasarle los datos para la api
             this.props.history.push('/appointmentConfirmed')
@@ -115,7 +125,7 @@ class Contact extends Component {
         let validation = this.submitted ?              
                         this.validator.validate({
                             serviceType: this.state.serviceType,
-                            date: this.state.date.toDateString(),
+                            date: this.isValidDate(this.state.date) ? this.state.date.toDateString() : '',
                             description: this.state.description,
                             emptyDate: this.state.dateSelected ? 'selected' : '',
                         }) : this.state.validation  
@@ -210,4 +220,4 @@ const convertDate = inputFormat => {
     function pad(s) { return (s < 10) ? '0' + s : s; }
     var d = new Date(inputFormat);
     return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
-  }
+}

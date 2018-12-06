@@ -13,10 +13,31 @@ import { withRouter } from 'react-router-dom'
 import queryString from 'query-string'
 import * as searchDataActions from '../../store/actions/searchDataActions'
 import * as searchResultsActions from '../../store/actions/searchResultsActions'
+import BadRequest from '../../components/Errors/BadRequest/BadRequest'
 
 class Search extends Component {
 
+    state = {
+        searchedAddress: '',
+        error: false,
+    }
+
+    componentDidMount() {
+        const queries = queryString.parse(this.props.location.search)
+        if(!queries.addr){
+            this.setState({
+                error:true,
+            })
+        }
+        this.setState({searchedAddress: queries.addr})
+    }
+
     render () {
+        /* No address in url, showing bad request */
+        if(this.state.error) {
+            return (<BadRequest />)
+        }
+
         /* if api status is none the user enter the page without pressing search btn.
             show error msg asking to do a search */
         let results = (<EmptySearch />)
@@ -55,6 +76,7 @@ class Search extends Component {
                             calification={provider.generalCalification}
                             id={provider.id}
                             key={provider.id}
+                            searchedAddress={this.state.searchedAddress}
                             />)
             })
 
