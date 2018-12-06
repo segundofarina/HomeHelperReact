@@ -24,9 +24,28 @@ const reducer = (state = initialState, action) => {
                 status: apiStatus.API_STATUS_DONE,
                 appointments: action.payload.appointments,
             }
+        case actionTypes.PROVIDER_APPOINTMENTS_UPDATE:
+            return {
+                ...state,
+                appointments: updateAppointment(action.payload.appointment, state.appointments),
+            }
         default: 
             return state
     }
+}
+
+const updateAppointment = (appointment, appointments) => {
+    const newAppointments = []
+    
+    appointments.forEach(oldAppointment => {
+        if(oldAppointment.id === appointment.id) {
+            newAppointments.push(appointment)
+        } else {
+            newAppointments.push(oldAppointment)
+        }
+    })
+    
+    return newAppointments
 }
 
 export default reducer

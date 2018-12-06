@@ -24,6 +24,11 @@ const reducer = (state = initialState, action) => {
                 status: apiStatus.API_STATUS_DONE,
                 appointments: action.payload.appointments,
             }
+        case actionTypes.APPOINTMENTS_SAVE_APPOINTMENT:
+            return {
+                ...state,
+                appointments: [...state.appointments, action.payload.appointment],
+            }
         default:
             return state
     }
