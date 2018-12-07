@@ -7,9 +7,9 @@ const summary = (props)=>{
         <div className={styles.Container}>
         
             <div className={styles.Img}>
-                <object data={props.img} type="image/png">
-                    <img src={defaultImg} alt="Profile Picture"/>
-                </object>
+            <img src={props.img} 
+            onError={(ev)=>ev.target.src = defaultImg} 
+            className={styles.ProfilePicture}/>
             </div>
             <div className={styles.Name}>
                 {props.name}

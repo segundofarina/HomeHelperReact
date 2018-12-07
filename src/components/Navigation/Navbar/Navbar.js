@@ -18,7 +18,8 @@ const navBar = (props) => {
                     showingProvider={props.showingProvider}
                     handleUseAsProvider={props.useAsProvider}
                     firstName={props.firstName}
-                    handleLogOut={props.logOut} />
+                    handleLogOut={props.logOut}
+                    img={props.img} />
         )
     }
 
@@ -50,6 +51,7 @@ const mapStateToProps = state => {
         authenticated: state.userData.authenticated,
         isProvider: state.userData.userData.isProvider,
         firstName: state.userData.userData.firstName,
+        img: state.userData.userData.imgUrl,
     }
 }
 

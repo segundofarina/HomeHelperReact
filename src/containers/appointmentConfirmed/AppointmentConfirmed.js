@@ -38,7 +38,8 @@ class AppointmentsConfirmed extends Component {
                                         calification={this.props.provider.score}
                                         serviceType={this.props.serviceType}
                                         date={this.props.date}
-                                        description={this.props.description} />
+                                        description={this.props.description}
+                                        img={this.props.provider.pictureUrl} />
                     <Button className={styles.Button}
                             onClick={this.handleBtnClick}>
                             Go to appointments

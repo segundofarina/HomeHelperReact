@@ -8,9 +8,9 @@ const Review = (props)=>{
         <div className={styles.Container}>
             <div className={styles.ProfileInfo}>
                 <div className={styles.ProfileImg}>
-                <object data={props.img} type="image/png">
-                    <img src={defaultImg} alt="Profile Picture"/>
-                </object>
+                <img src={props.img} 
+                    onError={(ev)=>ev.target.src = defaultImg} 
+                    className={styles.ProfilePicture}/>
                 </div>
                 <h5 className={styles.Name}>{props.name}</h5>
             </div>

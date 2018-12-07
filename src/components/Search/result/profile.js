@@ -16,9 +16,9 @@ const profile = (props) => {
         <Panel className={styles.Panel}>
             <div className={styles.Col}>
                 <div className={styles.ProfileImg}>
-                <object data={props.img} type="image/png">
-                    <img src={defaultImg} alt="Profile Picture"/>
-                </object>
+                <img src={props.img} 
+                    onError={(ev)=>ev.target.src = defaultImg} 
+                    className={styles.ProfilePicture}/>
                 </div>
                 <Button onClick={props.onClick} 
                     btnType='Small'

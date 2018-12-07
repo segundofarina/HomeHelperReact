@@ -30,7 +30,7 @@ const menuBtns = (props) => {
                 {btns}
             </div>
             <DropdownBtn name={props.firstName}
-                img=""
+                img={props.img}
                 isProvider={props.isProvider}
                 showingProvider={props.showingProvider}
                 handleUseAsProvider={props.handleUseAsProvider}
