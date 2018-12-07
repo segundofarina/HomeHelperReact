@@ -9,6 +9,8 @@ import { withRouter } from 'react-router-dom'
 import Loading from '../../components/Status/Loading/Loading'
 import axios from 'axios'
 import Alert from '../../components/UI/Alert/Alert'
+import { connect } from 'react-redux'
+import * as userDateActions from '../../store/actions/userDataActions'
 
 class CreateUser extends Component {
 
@@ -135,11 +137,23 @@ class CreateUser extends Component {
                 phone: this.state.phone,
                 address: this.state.address
             })
-            await axios.put(response.headers.location + '/image', this.state.image, {
+            
+            const token = response.headers['x-authorization']
+
+            /* Upload img */
+            const formData = new FormData()
+            formData.append('file',this.state.image)
+
+            await axios.put(response.headers.location + '/image', formData, {
                 headers: {
-                    'Content-Type': this.state.image.type
+                    'Content-Type': 'multipart/form-data',
+                    'X-Authorization': token
                 }
             })
+
+            /* Perform authentication */
+            this.props.setToken(token)
+
             this.props.history.push('/')
         } catch(error) {
             console.log(error)
@@ -154,10 +168,10 @@ class CreateUser extends Component {
         let file = e.target.files[0];
 
         reader.onloadend = () => {
-        this.setState({
-            image: file,
-            imagePreviewUrl: reader.result
-        });
+            this.setState({
+                image: file,
+                imagePreviewUrl: reader.result
+            });
         }
         reader.readAsDataURL(file)
     }
@@ -298,4 +312,10 @@ class CreateUser extends Component {
     }
 }
 
-export default withRouter(CreateUser)
+const mapDispatchToProps = dispatch => {
+    return {
+        setToken: (token) => dispatch(userDateActions.setToken(token)),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(CreateUser))
