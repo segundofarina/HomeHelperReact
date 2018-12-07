@@ -19,6 +19,9 @@ import providerAppointmentsReducer from './store/reducers/providerAppointmentsRe
 import providerProfileReducer from './store/reducers/providerProfileReducer'
 
 axios.defaults.baseURL = 'http://localhost:8080/api'
+//axios.defaults.baseURL = 'http://10.0.0.53:8080/api'
+//axios.defaults.baseURL = 'http://pawserver.it.itba.edu.ar/paw-2018a-4/api'
+/*TODO profiles*/ 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

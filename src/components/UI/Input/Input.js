@@ -30,7 +30,7 @@ const input = (props) => {
     }
 
     return (
-        <div className={styles.formGroup}>
+        <div className={[styles.formGroup, props.groupstyle].join(' ')}>
             {labelElem}
             {inputElem}
         </div>
