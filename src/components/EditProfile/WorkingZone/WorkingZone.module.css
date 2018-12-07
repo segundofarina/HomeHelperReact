@@ -1,0 +1,58 @@
+.WorkingZoneEditor {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.Panel {
+    width: 100%;
+    padding: 20px 40px;
+}
+
+.Title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h4 {
+    margin: 20px;
+}
+
+.EditDescriptionBtn {
+    margin: 10px;
+    margin-right: 20px;
+    padding: 5px 15px;
+    border: 1px solid;
+    border-radius: 4px;
+    color: #ff609e;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.ActionBtns {
+    display: flex;
+}
+
+.SaveDescriptionBtn {
+    margin: 10px;
+    margin-right: 20px;
+    padding: 5px 15px;
+    border: 1px solid;
+    border-radius: 4px;
+    color: #29bca1;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.CancelDescriptionBtn {
+    margin: 10px;
+    margin-right: 20px;
+    padding: 5px 15px;
+    border: 1px solid;
+    border-radius: 4px;
+    color: #d62a2a;
+    font-weight: 500;
+    cursor: pointer;
+}
