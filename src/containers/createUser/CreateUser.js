@@ -5,41 +5,54 @@ import defaultImg from '../../assets/img/defaultProfile.png'
 import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
 import FormValidator from '../../FormValidator/FormValidator'
+import { withRouter } from 'react-router-dom'
+import Loading from '../../components/Status/Loading/Loading'
+import axios from 'axios'
+import Alert from '../../components/UI/Alert/Alert'
 
 class CreateUser extends Component {
+
+    passwordMatch = (confirmation, state) => (state.password === confirmation)
 
     /* Form validation */
     validator = new FormValidator([
         {
             field: 'username',
-            method: 'isAlphanumeric',
-            validWhen: true,
-            message: 'Please fill a valid address'
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Please fill a valid username'
          },{
             field: 'password',
             method: 'isLength',
+            args: [{min: 8}],
             validWhen: true,
-            message: 'Please select a service type'
+            message: 'The password should be at least 8 characters'
         },{
             field: 'repeatPass',
             method: 'isLength',
+            args: [{min: 8}],
             validWhen: true,
-            message: 'Please fill a valid address'
+            message: 'The password should be at least 8 characters'
+        },{
+            field: 'repeatPass',
+            method: this.passwordMatch,
+            validWhen: true,
+            message: 'The passwords should match',
         },{
             field: 'email',
             method: 'isEmail',
             validWhen: true,
-            message: 'Please fill a valid address',
+            message: 'Please fill a valid email',
         },{
             field: 'firstname',
-            method: 'isAlphanumeric',
-            validWhen: true,
-            message: 'Please fill a valid address',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Please fill a name',
         },{
             field: 'lastname',
-            method: 'isAlphanumeric',
-            validWhen: true,
-            message: 'Please fill a valid address',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Please fill a last name',
         },{
             field: 'address',
             method: 'isEmpty',
@@ -47,15 +60,19 @@ class CreateUser extends Component {
             message: 'Please fill a valid address',
         },{
             field: 'phone',
-            method: 'isMobilePhone',
+            method: 'isInt',
             validWhen: true,
-            message: 'Please fill a valid address',
+            message: 'Please fill a valid phone',
+        },{
+            field: 'phone',
+            method: 'isLength',
+            args: [{min : 7, max: 11}],
+            validWhen: true,
+            message: 'Please fill a valid phone',
         }
-
     ])
 
     submitted = false
-
 
 
     state = {
@@ -69,6 +86,11 @@ class CreateUser extends Component {
         lastname:'',
         address:'',
         phone:'',
+        
+        loading: false,
+        error: false,
+        errorStatusCode: '',
+
         validation: this.validator.valid()
     };
 
@@ -97,9 +119,31 @@ class CreateUser extends Component {
         this.setState({validation})
         this.submitted = true
         if(validation.isValid) {
-            this.props.searchDataUpdate(this.state.location, this.state.serviceType, this.state.coords)
-            this.props.searchResultsUpdate(this.state.serviceType, this.state.coords)
-            this.props.history.push(`/search?st=${this.state.serviceType}&lat=${this.state.coords.lat}&lng=${this.state.coords.lng}&addr=${btoa(this.state.location)}`)
+            this.sendUser()
+        }
+    }
+
+    sendUser = async () => {
+        this.setState({loading: true, error: false})
+        try {
+            const response = await axios.post('/users', {
+                username: this.state.username,
+                password: this.state.password,
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                email: this.state.email,
+                phone: this.state.phone,
+                address: this.state.address
+            })
+            await axios.put(response.headers.location + '/image', this.state.image, {
+                headers: {
+                    'Content-Type': this.state.image.type
+                }
+            })
+            this.props.history.push('/')
+        } catch(error) {
+            console.log(error)
+            this.setState({error: true, loading: false})
         }
     }
 
@@ -117,7 +161,12 @@ class CreateUser extends Component {
         }
         reader.readAsDataURL(file)
     }
+
     render() {
+        if(this.state.loading) {
+            return (<Loading />)
+        }
+
         let validation = this.submitted ?              
             this.validator.validate({
                 username: this.state.username,
@@ -130,10 +179,54 @@ class CreateUser extends Component {
                 phone: this.state.phone,
             }) : this.state.validation  
 
-        const inputStyle = [styles.Input]
+        const userStyles = [styles.Input]
         if(validation.username.isInvalid) {
-            inputStyle.push(styles.ValidationError)
+            userStyles.push(styles.ValidationError)
         }
+
+        const passwordStyles = [styles.Input]
+        if(validation.password.isInvalid) {
+            passwordStyles.push(styles.ValidationError)
+        }
+
+        const repeatPassStyles = [styles.Input]
+        if(validation.repeatPass.isInvalid) {
+            repeatPassStyles.push(styles.ValidationError)
+        }
+
+        const emailStyles = [styles.Input]
+        if(validation.email.isInvalid) {
+            emailStyles.push(styles.ValidationError)
+        }
+
+        const firstnameStyles = [styles.Input]
+        if(validation.firstname.isInvalid) {
+            firstnameStyles.push(styles.ValidationError)
+        }
+
+        const lastnameStyles = [styles.Input]
+        if(validation.lastname.isInvalid) {
+            lastnameStyles.push(styles.ValidationError)
+        }
+
+        const addressStyles = [styles.Input]
+        if(validation.address.isInvalid) {
+            addressStyles.push(styles.ValidationError)
+        }
+
+        const phoneStyles = [styles.Input]
+        if(validation.phone.isInvalid) {
+            phoneStyles.push(styles.ValidationError)
+        }
+
+        let errorElem = null
+        if(this.state.error) {
+            errorElem = (<Alert type='Danger' className={styles.Alert}>Error while connecting to server</Alert>)
+            if(this.state.errorStatusCode === 409) {
+                errorElem = (<Alert type='Danger' className={styles.Alert}>Username already taken</Alert>)
+            }
+        }
+
         let imagePreviewUrl = this.state.imagePreviewUrl;
         let $imagePreview = null;
         if (imagePreviewUrl) {
@@ -156,34 +249,43 @@ class CreateUser extends Component {
                                 <div className={styles.ImgText}>Profile image</div>
                             </div>
                         </div>
+                        {errorElem}
                         <div className={styles.Form}>
                         <div className={styles.Column}>
-                                <Input groupstyle={inputStyle}
+                                <Input groupstyle={userStyles.join(' ')}
                                         onChange={(e)=> this.inputChangeHanlder(e,"username")}
-                                        label='Username:' />
-                                <Input type="password" groupstyle={styles.Input}
+                                        label='Username:'
+                                        validationError={validation.username.message} />
+                                <Input type="password" groupstyle={passwordStyles.join(' ')}
                                         onChange={(e)=> this.inputChangeHanlder(e,"password")}
-                                        label='Password:' />
-                                <Input type="password" groupstyle={styles.Input}
+                                        label='Password:'
+                                        validationError={validation.password.message} />
+                                <Input type="password" groupstyle={repeatPassStyles.join(' ')}
                                         onChange={(e)=> this.inputChangeHanlder(e,"repeatPass")}
-                                        label='Repeat Password:' />
-                                <Input groupstyle={styles.Input}
+                                        label='Repeat Password:'
+                                        validationError={validation.repeatPass.message} />
+                                <Input groupstyle={emailStyles.join(' ')}
                                         onChange={(e)=> this.inputChangeHanlder(e,"email")}
-                                        label='Email:' />
+                                        label='Email:'
+                                        validationError={validation.email.message} />
                             </div>
                             <div className={styles.Column}>
-                                <Input groupstyle={styles.Input}
+                                <Input groupstyle={firstnameStyles.join(' ')}
                                         onChange={(e)=> this.inputChangeHanlder(e,"firstname")}
-                                        label='First name:' />
-                                <Input groupstyle={styles.Input}
+                                        label='First name:'
+                                        validationError={validation.firstname.message} />
+                                <Input groupstyle={lastnameStyles.join(' ')}
                                         onChange={(e)=> this.inputChangeHanlder(e,"lastname")}
-                                        label='Last name:' />
-                                <Input groupstyle={styles.Input}
+                                        label='Last name:'
+                                        validationError={validation.lastname.message} />
+                                <Input groupstyle={addressStyles.join(' ')}
                                         onChange={(e)=> this.inputChangeHanlder(e,"address")}
-                                        label='Address:' />
-                                <Input groupstyle={styles.Input}
+                                        label='Address:'
+                                        validationError={validation.address.message} />
+                                <Input groupstyle={phoneStyles.join(' ')}
                                         onChange={(e)=> this.inputChangeHanlder(e,"phone")}
-                                        label='Phone:' />
+                                        label='Phone:'
+                                        validationError={validation.phone.message} />
                             </div>
                         </div>
                         <Button className={styles.Button}
@@ -196,4 +298,4 @@ class CreateUser extends Component {
     }
 }
 
-export default CreateUser
+export default withRouter(CreateUser)

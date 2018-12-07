@@ -1,0 +1,67 @@
+.EditProfile {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: #f7f7f7;
+    align-items: center;
+}
+
+.Content {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+@media (min-width: 768px) {
+    .Content {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .Content {
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .Content {
+        width: 1170px;
+    }
+}
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.AptitudesTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.AptitudeTitle h3 {
+    margin: 0;
+}
+
+.AddAptitudeBtn {
+    color: #fff;
+    background-color: #ff609e;
+    width: auto;
+    margin: 10px;
+    margin-right: 0;
+    padding: 8px 15px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.WorkingZoneTitle {
+    margin-top: 50px;
+}

@@ -21,6 +21,7 @@ import ProviderDashboard from './containers/provider/dashboard/Dashboard'
 import ProviderMessages from './containers/provider/messages/Messages'
 import ProviderAppointments from './containers/provider/appointments/Appointments'
 import ProviderProgress from './containers/provider/progress/Progress'
+import ProviderEditProfile from './containers/provider/editProfile/EditProfile'
 
 import * as userDataAction from './store/actions/userDataActions'
 
@@ -65,6 +66,7 @@ class App extends Component {
                   <PrivateRoute path="/provider/messages" exact component={ProviderMessages} authenticated={this.props.isProvider} />
                   <PrivateRoute path="/provider/appointments" exact component={ProviderAppointments} authenticated={this.props.isProvider} />
                   <PrivateRoute path="/provider/progress" exact component={ProviderProgress} authenticated={this.props.isProvider} />
+                  <PrivateRoute path="/provider/editProfile" exact component={ProviderEditProfile} authenticated={this.props.isProvider} />
 
                   <PrivateRoute path="/signup" exact component={CreateUser} authenticated={!this.props.isAuthenticated} />
 

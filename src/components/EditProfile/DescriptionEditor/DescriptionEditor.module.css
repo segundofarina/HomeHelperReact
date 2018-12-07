@@ -1,0 +1,131 @@
+.DescriptionEditor {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.Panel {
+    width: 100%;
+    padding: 20px 40px;
+}
+
+.Title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h4 {
+    margin: 20px;
+}
+
+.EditDescriptionBtn {
+    margin: 10px;
+    margin-right: 20px;
+    padding: 5px 15px;
+    border: 1px solid;
+    border-radius: 4px;
+    color: #ff609e;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.ActionBtns {
+    display: flex;
+}
+
+.SaveDescriptionBtn {
+    margin: 10px;
+    margin-right: 20px;
+    padding: 5px 15px;
+    border: 1px solid;
+    border-radius: 4px;
+    color: #29bca1;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.CancelDescriptionBtn {
+    margin: 10px;
+    margin-right: 20px;
+    padding: 5px 15px;
+    border: 1px solid;
+    border-radius: 4px;
+    color: #d62a2a;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+textarea {
+    box-shadow: none;
+    width: 100%;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    outline: none;
+    resize: vertical;
+    min-height: 150px;
+}
+
+
+
+/* Action buttons animations */
+
+.ActionsLoading > div {
+    width: 10px;
+    height: 10px;
+    background-color: #ff5594;
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    margin-right: 5px;
+}
+  
+.ActionsLoading .Bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+  
+.ActionsLoading .Bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+  
+@-webkit-keyframes sk-bouncedelay {
+    0%, 80%, 100% { -webkit-transform: scale(0) }
+    40% { -webkit-transform: scale(1.0) }
+}
+  
+@keyframes sk-bouncedelay {
+    0%, 80%, 100% { 
+      -webkit-transform: scale(0);
+      transform: scale(0);
+    } 40% { 
+      -webkit-transform: scale(1.0);
+      transform: scale(1.0);
+    }
+}
+
+.ApiError {
+    color: #d62a2a;
+    font-size: 12px;
+    font-style: italic;
+}
+
+
+.ValidationError input, .ValidationError select, .ValidationError textarea {
+    border: 1px solid #e21313!important;
+}
+
+.ValidationMsg {
+    color: #e21313;
+    font-size: 13px;
+    text-align: center;
+    font-style: italic;
+}

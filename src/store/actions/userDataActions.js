@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode'
 import * as chatActions  from './chatActions'
 import * as appointmentsActions from './appointmentsActions'
 import * as providerAppointmentsActions from './providerAppointmentsActions'
+import * as providerProfileActions from './providerProfileActions'
 
 export const updateUsingProvider = (showingProvider) => {
     return {
@@ -129,5 +130,6 @@ const clearReduxState = () => {
         dispatch(chatActions.chatClearState())
         dispatch(appointmentsActions.appointmentsClearState())
         dispatch(providerAppointmentsActions.providersAppointmentsClearState())
+        dispatch(providerProfileActions.providerClearState())
     }
 }
