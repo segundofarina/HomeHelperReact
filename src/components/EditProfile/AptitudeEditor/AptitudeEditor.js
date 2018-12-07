@@ -98,7 +98,7 @@ class AptitudeEditor extends Component {
         this.setState({loading: true})
         //post to the api
         try {
-            const response = await axios.delete(`/providers/${this.props.providerId}/aptitudes/${this.props.id}`)
+            const response = await axios.delete(`/providers/${this.props.providerId}/aptitudes/${this.state.serviceType.id}`)
             this.props.onAptitudeSave()
         } catch (error) {
             console.log('error')
