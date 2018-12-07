@@ -94,7 +94,7 @@ class AptitudeEditor extends Component {
         }
     }
 
-    handleDeleteClick = () => {
+    handleDeleteClick = async () => {
         this.setState({loading: true})
         //post to the api
         // data is prevServiceType and prevText
