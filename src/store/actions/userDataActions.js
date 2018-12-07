@@ -108,6 +108,7 @@ const clearTokenFromLocalStorage = () => {
 
 export const setToken = (token) => {
     axios.defaults.headers.common['X-Authorization'] = token
+    saveTokenToLocalStorage(token)
     return {
         type: actionTypes.USER_DATA_SET_TOKEN,
         payload: {

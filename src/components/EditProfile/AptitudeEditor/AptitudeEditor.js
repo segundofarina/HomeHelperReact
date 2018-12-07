@@ -97,20 +97,8 @@ class AptitudeEditor extends Component {
     handleDeleteClick = async () => {
         this.setState({loading: true})
         //post to the api
-        // data is prevServiceType and prevText
         try {
-            const response = await axios.delete(`/providers/${this.props.providerId}`,{
-                aptitudes: [
-                    {
-                        id: this.props.id,
-                        description: this.state.text,
-                        serviceType: {
-                            id: this.state.serviceType.value,
-                            name: this.state.serviceType.name,
-                        }
-                    }
-                ]
-            })
+            const response = await axios.delete(`/providers/${this.props.providerId}/aptitudes/${this.state.serviceType.id}`)
             this.props.onAptitudeSave()
         } catch (error) {
             console.log('error')
