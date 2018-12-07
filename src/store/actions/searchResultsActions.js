@@ -32,6 +32,7 @@ export const searchResultsUpdate = (serviceType, coords) => {
         /* Async code to fetch new results */
         try {
             const ans = await axios.get(url)
+            console.log(ans.data)
             dispatch(searchResultsUpdateDone(ans.data.providers, ans.data.page))
         } catch(error) {
             dispatch(searchResultsUpdateError())
