@@ -136,3 +136,9 @@
     text-align: center;
     font-style: italic;
 }
+
+
+.Alert {
+    margin-top: 20px;
+    width: 60%;
+}

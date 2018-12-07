@@ -5,6 +5,10 @@ import defaultImg from '../../assets/img/defaultProfile.png'
 import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
 import FormValidator from '../../FormValidator/FormValidator'
+import { withRouter } from 'react-router-dom'
+import Loading from '../../components/Status/Loading/Loading'
+import axios from 'axios'
+import Alert from '../../components/UI/Alert/Alert'
 
 class CreateUser extends Component {
 
@@ -82,6 +86,11 @@ class CreateUser extends Component {
         lastname:'',
         address:'',
         phone:'',
+        
+        loading: false,
+        error: false,
+        errorStatusCode: '',
+
         validation: this.validator.valid()
     };
 
@@ -110,12 +119,31 @@ class CreateUser extends Component {
         this.setState({validation})
         this.submitted = true
         if(validation.isValid) {
-            console.log('isValid')
-            //this.props.searchDataUpdate(this.state.location, this.state.serviceType, this.state.coords)
-            //this.props.searchResultsUpdate(this.state.serviceType, this.state.coords)
-            //this.props.history.push(`/search?st=${this.state.serviceType}&lat=${this.state.coords.lat}&lng=${this.state.coords.lng}&addr=${btoa(this.state.location)}`)
-        }else{
-            console.log('not valid')
+            this.sendUser()
+        }
+    }
+
+    sendUser = async () => {
+        this.setState({loading: true, error: false})
+        try {
+            const response = await axios.post('/users', {
+                username: this.state.username,
+                password: this.state.password,
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                email: this.state.email,
+                phone: this.state.phone,
+                address: this.state.address
+            })
+            await axios.put(response.headers.location + '/image', this.state.image, {
+                headers: {
+                    'Content-Type': this.state.image.type
+                }
+            })
+            this.props.history.push('/')
+        } catch(error) {
+            console.log(error)
+            this.setState({error: true, loading: false})
         }
     }
 
@@ -135,6 +163,10 @@ class CreateUser extends Component {
     }
 
     render() {
+        if(this.state.loading) {
+            return (<Loading />)
+        }
+
         let validation = this.submitted ?              
             this.validator.validate({
                 username: this.state.username,
@@ -187,6 +219,14 @@ class CreateUser extends Component {
             phoneStyles.push(styles.ValidationError)
         }
 
+        let errorElem = null
+        if(this.state.error) {
+            errorElem = (<Alert type='Danger' className={styles.Alert}>Error while connecting to server</Alert>)
+            if(this.state.errorStatusCode === 409) {
+                errorElem = (<Alert type='Danger' className={styles.Alert}>Username already taken</Alert>)
+            }
+        }
+
         let imagePreviewUrl = this.state.imagePreviewUrl;
         let $imagePreview = null;
         if (imagePreviewUrl) {
@@ -209,6 +249,7 @@ class CreateUser extends Component {
                                 <div className={styles.ImgText}>Profile image</div>
                             </div>
                         </div>
+                        {errorElem}
                         <div className={styles.Form}>
                         <div className={styles.Column}>
                                 <Input groupstyle={userStyles.join(' ')}
@@ -257,4 +298,4 @@ class CreateUser extends Component {
     }
 }
 
-export default CreateUser
+export default withRouter(CreateUser)
