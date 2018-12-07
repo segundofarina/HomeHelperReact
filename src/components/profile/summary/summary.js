@@ -1,11 +1,15 @@
 import React from 'react'
 import styles from './summary.module.css'
 import Rating from '../../UI/rating/Rating'
+import defaultImg from '../../../assets/img/defaultProfile.png'
 const summary = (props)=>{
     return(
         <div className={styles.Container}>
+        
             <div className={styles.Img}>
-                <img src={props.img} alt="" />
+                <object data={props.img} type="image/png">
+                    <img src={defaultImg} alt="Profile Picture"/>
+                </object>
             </div>
             <div className={styles.Name}>
                 {props.name}

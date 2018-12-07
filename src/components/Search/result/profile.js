@@ -3,6 +3,7 @@ import styles from './profile.module.css'
 import Button from '../../UI/Button/Button'
 import Panel from '../../UI/Panel/Panel'
 import Rating from '../../UI/rating/Rating'
+import defaultImg from '../../../assets/img/defaultProfile.png'
 
 const profile = (props) => {
 
@@ -15,7 +16,9 @@ const profile = (props) => {
         <Panel className={styles.Panel}>
             <div className={styles.Col}>
                 <div className={styles.ProfileImg}>
-                    <img src={props.img} alt="" />
+                <object data={props.img} type="image/png">
+                    <img src={defaultImg} alt="Profile Picture"/>
+                </object>
                 </div>
                 <Button onClick={props.onClick} 
                     btnType='Small'
