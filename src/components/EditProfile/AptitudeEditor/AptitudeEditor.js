@@ -11,6 +11,7 @@ class AptitudeEditor extends Component {
         prevServiceType: this.props.serviceType,
         newServiceType: this.props.serviceType.name,
         isEditing: this.props.new,
+        loading: false,
     }
 
     handleEditClick = () => {
@@ -35,13 +36,21 @@ class AptitudeEditor extends Component {
             isEditing: false,
             prevServiceType: this.state.serviceType,
             newServiceType: this.state.serviceType.name,
+            loading: true,
         })
         //post to the api
+
+        /* On success */
+        //this.props.onAptitudeSave()
     }
 
     handleDeleteClick = () => {
+        this.setState({loading: true})
         //post to the api
         // data is prevServiceType and prevText
+
+        /* On success */
+        this.props.onAptitudeSave()
     }
 
     textChangeHandler = (event) => {
@@ -81,7 +90,7 @@ class AptitudeEditor extends Component {
 
             actionsBtns = (
                 <div className={styles.ActionBtns}>
-                    {!this.props.new && <div className={styles.DeleteBtn} onClick={this.handleDeleteClick}>Delete</div>}
+                    {!this.props.new && this.props.deletable && <div className={styles.DeleteBtn} onClick={this.handleDeleteClick}>Delete</div>}
                     <div className={styles.CancelDescriptionBtn} onClick={this.handleCancelClick}>Cancel</div>
                     <div className={styles.SaveDescriptionBtn} onClick={this.handleSaveClick}>Save</div>
                 </div>
@@ -109,6 +118,16 @@ class AptitudeEditor extends Component {
                         onSelect={this.serviceTypeSelectHandler}
                         inputProps={{className: styles.AutocompleteInput}}
                     />
+                </div>
+            )
+        }
+        
+        if(this.state.loading) {
+            actionsBtns = (
+                <div className={styles.ActionsLoading}>
+                    <div className={styles.Bounce1}></div>
+                    <div className={styles.Bounce2}></div>
+                    <div className={styles.Bounce3}></div>
                 </div>
             )
         }

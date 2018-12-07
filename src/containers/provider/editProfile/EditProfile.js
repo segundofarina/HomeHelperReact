@@ -37,7 +37,10 @@ class EditProfile extends Component {
 
     handleNewAppointmentCancel = () => {
         this.setState({addingAptitude: false})
-        console.log('aca')
+    }
+
+    handleSaveAptitude = () => {
+        this.props.providerInit(this.props.providerId)
     }
 
     render() {
@@ -67,7 +70,8 @@ class EditProfile extends Component {
                                 posibleServiceTypes={posibleServiceTypes}
                                 serviceType={aptitude.serviceType}
                                 key={aptitude.serviceType.id}
-                                deletable={deletableAptitude} />
+                                deletable={deletableAptitude}
+                                onAptitudeSave={this.handleSaveAptitude} />
             )
         })
 
@@ -78,7 +82,8 @@ class EditProfile extends Component {
                                 posibleServiceTypes={remainingServiceTypes}
                                 serviceType={{value: null, name: ''}}
                                 new
-                                onCancel={this.handleNewAppointmentCancel} />
+                                onCancel={this.handleNewAppointmentCancel}
+                                onAptitudeSave={this.handleSaveAptitude} />
             )
         }
 
@@ -93,7 +98,7 @@ class EditProfile extends Component {
                     </div>
                     {newAptitude}
                     {aptitudes}
-                    <WorkingZone />
+                    <WorkingZone coords={this.props.provider.coordenates} />
                 </div>
             </div>
         )
