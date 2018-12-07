@@ -10,7 +10,7 @@ import { withRouter } from 'react-router-dom'
 
 const navBar = (props) => {
 
-    let NavbarLinks = (<Link className={styles.loginButton} to="/login">Iniciar Sesion</Link>)
+    let NavbarLinks = (<div className={styles.loginButton} onClick={props.onLoginClick}>Iniciar Sesion</div>)
 
     if(props.authenticated) {
         NavbarLinks = (
