@@ -63,10 +63,9 @@ class App extends Component {
                   <PrivateRoute path="/writeReview" exact component={Review} authenticated={this.props.isAuthenticated} />
                   <PrivateRoute path="/appointmentConfirmed" exact component={AppointmentConfirmed} authenticated={this.props.isAuthenticated} />
 
-                  <PrivateRoute path="/provider" exact component={ProviderDashboard} authenticated={this.props.isProvider} />
+                  <PrivateRoute path="/provider" exact component={ProviderProgress} authenticated={this.props.isProvider} />
                   <PrivateRoute path="/provider/messages" exact component={ProviderMessages} authenticated={this.props.isProvider} />
                   <PrivateRoute path="/provider/appointments" exact component={ProviderAppointments} authenticated={this.props.isProvider} />
-                  <PrivateRoute path="/provider/progress" exact component={ProviderProgress} authenticated={this.props.isProvider} />
                   <PrivateRoute path="/provider/editProfile" exact component={ProviderEditProfile} authenticated={this.props.isProvider} />
 
                   <PrivateRoute path="/signup" exact component={CreateUser} authenticated={!this.props.isAuthenticated} />
