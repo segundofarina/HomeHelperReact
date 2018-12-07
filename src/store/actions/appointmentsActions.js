@@ -54,3 +54,9 @@ const saveAppointment = (appointment) => {
         }
     }
 }
+
+export const appointmentsClearState = () => {
+    return {
+        type: actionTypes.APPOINTMENTS_CLEAR_STATE,
+    }
+}

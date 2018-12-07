@@ -29,6 +29,8 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 appointments: saveAppointment(action.payload.appointment, state.appointments),
             }
+        case actionTypes.APPOINTMENTS_CLEAR_STATE:
+            return initialState
         default:
             return state
     }

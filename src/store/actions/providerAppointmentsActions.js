@@ -43,3 +43,9 @@ export const providerAppointmentsUpdate = (appointment) => {
         }
     }
 }
+
+export const providersAppointmentsClearState = () => {
+    return {
+        type: actionTypes.PROVIDER_APPOINTMENTS_CLEAR_STATE,
+    }
+}

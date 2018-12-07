@@ -29,6 +29,8 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 appointments: updateAppointment(action.payload.appointment, state.appointments),
             }
+        case actionTypes.PROVIDER_APPOINTMENTS_CLEAR_STATE:
+            return initialState
         default: 
             return state
     }

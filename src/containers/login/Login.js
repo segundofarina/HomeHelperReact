@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styles from './Login.module.css'
-import { Link, withRouter } from 'react-router-dom'
+import { Link, withRouter, Redirect } from 'react-router-dom'
 import Logo from '../../assets/img/HHLogo.png'
 import Button from '../../components/UI/Button/Button'
 import { connect } from 'react-redux'
@@ -93,7 +93,7 @@ class Login extends Component {
         }
 
         if(this.props.apiCall.status === apiStatus.API_STATUS_DONE) {
-            this.props.history.replace('/')
+            return (<Redirect to='/' />)
         }
    
         const usernameStyles = [styles.FormGroup]
