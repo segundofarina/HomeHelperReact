@@ -26,6 +26,7 @@ import ProviderEditProfile from './containers/provider/editProfile/EditProfile'
 import * as userDataAction from './store/actions/userDataActions'
 
 import Test from './containers/testing/testing'
+import NotFound from './components/Errors/NotFound/NotFound';
 
 
 class App extends Component {
@@ -72,7 +73,7 @@ class App extends Component {
 
                   <Route path="/test" exact component={Test}/>
                   <Route path="/forbidden" exact component={Forbidden} />
-                  <Route render={() => (<h1>404 Not found</h1>)} />
+                  <Route component={NotFound} />
                 </Switch>
               </Layout>
             </Switch>

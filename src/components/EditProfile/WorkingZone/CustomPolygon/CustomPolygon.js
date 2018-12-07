@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { arePathsEqual } from './Utils/arPathEqual';
 import { camelize } from './Utils/String';
-const evtNames = ['click', 'mouseout', 'mouseover'];
 
 const wrappedPromise = function() {
     var wrappedPromise = {},
@@ -78,10 +77,6 @@ export class Polygon extends React.Component {
 
     this.polygon = new google.maps.Polygon(params);
 
-    evtNames.forEach(e => {
-      this.polygon.addListener(e, this.handleEvent(e));
-    });
-
     this.polygon.getPaths().forEach(path => {
         google.maps.event.addListener(path, 'insert_at', () => {
             const coords = []
@@ -130,15 +125,6 @@ export class Polygon extends React.Component {
     return this.polygonPromise;
   }
 
-  handleEvent(evt) {
-    return (e) => {
-      const evtName = `on${camelize(evt)}`
-      if (this.props[evtName]) {
-        this.props[evtName](this.props, this.polygon, e);
-      }
-    }
-  }
-
   render() {
     return null;
   }
@@ -152,8 +138,6 @@ Polygon.propTypes = {
   fillColor: PropTypes.string,
   fillOpacity: PropTypes.number
 }
-
-evtNames.forEach(e => Polygon.propTypes[e] = PropTypes.func)
 
 Polygon.defaultProps = {
   name: 'Polygon'
