@@ -15,6 +15,7 @@ import Review from './containers/review/Review'
 import AppointmentConfirmed from './containers/appointmentConfirmed/AppointmentConfirmed'
 import Forbidden from './components/Errors/Forbidden/Forbidden'
 import Loading from './components/Status/Loading/Loading'
+import CreateUser from './containers/createUser/CreateUser'
 
 import ProviderDashboard from './containers/provider/dashboard/Dashboard'
 import ProviderMessages from './containers/provider/messages/Messages'
@@ -64,7 +65,9 @@ class App extends Component {
                   <PrivateRoute path="/provider/messages" exact component={ProviderMessages} authenticated={this.props.isProvider} />
                   <PrivateRoute path="/provider/appointments" exact component={ProviderAppointments} authenticated={this.props.isProvider} />
                   <PrivateRoute path="/provider/progress" exact component={ProviderProgress} authenticated={this.props.isProvider} />
-                  
+
+                  <PrivateRoute path="/signup" exact component={CreateUser} authenticated={!this.props.isAuthenticated} />
+
                   <Route path="/test" exact component={Test}/>
                   <Route path="/forbidden" exact component={Forbidden} />
                   <Route render={() => (<h1>404 Not found</h1>)} />

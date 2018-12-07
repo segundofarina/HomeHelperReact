@@ -13,7 +13,7 @@ export const searchResultsUpdateError = () => {
     }
 }
 
-export const searchResultsUpdateDone = (providers, currentPage) => {
+export const searchResultsUpdateDone = (providers = [], currentPage) => {
     return {
         type: actionTypes.SEARCH_RESULTS_UPDATE_DONE,
         payload: {
