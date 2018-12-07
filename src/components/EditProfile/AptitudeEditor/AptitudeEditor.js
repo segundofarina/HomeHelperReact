@@ -2,8 +2,28 @@ import React, { Component } from 'react'
 import styles from './AptitudeEditor.module.css'
 import Panel from '../../UI/Panel/Panel'
 import Autocomplete from 'react-autocomplete'
+import FormValidator from '../../../FormValidator/FormValidator'
+import axios from 'axios'
 
 class AptitudeEditor extends Component {
+
+    /* Form validation */
+    validator = new FormValidator([
+        {
+            field: 'text',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Please fill a description'
+        },{
+            field: 'serviceType',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Please fill a service type'
+        }
+    ])
+
+    submitted = false
+
     state = {
         text: this.props.description,
         prevText: this.props.description,
@@ -12,6 +32,9 @@ class AptitudeEditor extends Component {
         newServiceType: this.props.serviceType.name,
         isEditing: this.props.new,
         loading: false,
+        aptitudeId: this.props.id,
+        error: false,
+        validation: this.validator.valid(),
     }
 
     handleEditClick = () => {
@@ -30,27 +53,70 @@ class AptitudeEditor extends Component {
         }
     }
 
-    handleSaveClick = () => {
-        this.setState({
-            prevText: this.state.text,
-            isEditing: false,
-            prevServiceType: this.state.serviceType,
-            newServiceType: this.state.serviceType.name,
-            loading: true,
+    handleSaveClick = async () => {
+        console.log(this.state.serviceType.name)
+        const validation = this.validator.validate({
+            text: this.state.text,
+            serviceType: `${this.state.serviceType.name}`,
+            validation: this.state.validation,
         })
-        //post to the api
 
+        this.setState({validation})
+        this.submitted = true
+        if(validation.isValid) {
+            this.setState({
+                prevText: this.state.text,
+                isEditing: false,
+                prevServiceType: this.state.serviceType,
+                newServiceType: this.state.serviceType.name,
+                loading: true,
+            })
+        //post to the api
+        try {
+            const response = await axios.put(`/providers/${this.props.providerId}`,{
+                aptitudes: [
+                    {
+                        id: this.props.id,
+                        description: this.state.text,
+                        serviceType: {
+                            id: this.state.serviceType.value,
+                            name: this.state.serviceType.name,
+                        }
+                    }
+                ]
+            })
+            this.props.onAptitudeSave()
+        } catch (error) {
+            console.log('error')
+            this.setState({error: true})
+        }
         /* On success */
-        //this.props.onAptitudeSave()
+        }
     }
 
     handleDeleteClick = () => {
         this.setState({loading: true})
         //post to the api
         // data is prevServiceType and prevText
+        try {
+            const response = await axios.delete(`/providers/${this.props.providerId}`,{
+                aptitudes: [
+                    {
+                        id: this.props.id,
+                        description: this.state.text,
+                        serviceType: {
+                            id: this.state.serviceType.value,
+                            name: this.state.serviceType.name,
+                        }
+                    }
+                ]
+            })
+            this.props.onAptitudeSave()
+        } catch (error) {
+            console.log('error')
+            this.setState({error: true})
+        }
 
-        /* On success */
-        this.props.onAptitudeSave()
     }
 
     textChangeHandler = (event) => {
@@ -71,6 +137,13 @@ class AptitudeEditor extends Component {
     }
 
     render() {
+        let validation = this.submitted ?              
+                        this.validator.validate({
+                            text: this.state.text,
+                            serviceType: `${this.state.serviceType.value}`,
+                            validation: this.state.validation,
+                        }) : this.state.validation  
+
         let editorElem = (
             <p>{this.state.text}</p>
         )
@@ -83,9 +156,12 @@ class AptitudeEditor extends Component {
         )
         if(this.state.isEditing) {
             editorElem = (
-                <textarea placeholder='Write your aptitude description...'
-                            onChange={this.textChangeHandler} value={this.state.text}>
-                </textarea>
+                <div>
+                    <textarea placeholder='Write your aptitude description...'
+                                onChange={this.textChangeHandler} value={this.state.text}>
+                    </textarea>
+                    <div className={styles.ValidationMsg}>{validation.text.message}</div> 
+                </div>
             )
 
             actionsBtns = (
@@ -118,6 +194,7 @@ class AptitudeEditor extends Component {
                         onSelect={this.serviceTypeSelectHandler}
                         inputProps={{className: styles.AutocompleteInput}}
                     />
+                    <div className={styles.ValidationMsg}>{validation.serviceType.message}</div> 
                 </div>
             )
         }
@@ -128,6 +205,15 @@ class AptitudeEditor extends Component {
                     <div className={styles.Bounce1}></div>
                     <div className={styles.Bounce2}></div>
                     <div className={styles.Bounce3}></div>
+                </div>
+            )
+        }
+
+        if(this.state.error) {
+            actionsBtns = (
+                <div className={styles.ActionBtns}>
+                    <p className={styles.ApiError}>Error while connecting to the server</p>
+                    <div className={styles.SaveDescriptionBtn} onClick={this.handleSaveClick}>Try again</div>
                 </div>
             )
         }

@@ -3,6 +3,7 @@ import styles from './WorkingZone.module.css'
 import Panel from '../../UI/Panel/Panel'
 import {Map, GoogleApiWrapper} from 'google-maps-react'
 import Polygon from './CustomPolygon/CustomPolygon'
+import axios from 'axios'
 const MY_API_KEY = "AIzaSyBqSX1WHUw4OlgMDzYM40uSVPGkV06DR1I"
 
 class WorkingZone extends Component {
@@ -10,6 +11,8 @@ class WorkingZone extends Component {
         isEditing: false,
         coords: this.props.coords,
         lastCoords: this.props.coords,
+        loading: false,
+        error: false,
     }
 
     handleEditClick = () => {
@@ -17,16 +20,33 @@ class WorkingZone extends Component {
     }
 
     handleCancelClick = () => {
-        this.setState({isEditing: false})
+        this.setState({isEditing: false, coords: this.state.lastCoords})
     }
 
     handleSaveClick = () => {
-        this.setState({isEditing: false})
+        /* Validate coords */
+        this.setState({isEditing: false, lastCoords: this.state.coords, loading: true})
         //post to the api
+        try {
+            axios.put(`/providers/${this.props.providerId}`,{
+                coordenates: this.state.coords,
+            })
+
+            this.setState({loading: false})
+        } catch (error) {
+            console.log('error')
+            this.setState({error: true})
+        }
     }
 
     handleUpdateCoord = (coords) => {
-        console.log(coords)
+        const newCoords = [...coords]
+        const firtsCoord = newCoords[0]
+        const lastCoords = newCoords[newCoords.length - 1]
+        if(firtsCoord.lat === lastCoords.lat && firtsCoord.lng === lastCoords.lng) {
+            newCoords.slice(0, newCoords.length-1)
+        }
+        this.setState({coords: newCoords})
     }
 
     center = {lat: '', lng: ''}
@@ -66,6 +86,25 @@ class WorkingZone extends Component {
                 </div>
             )
         }
+
+        if(this.state.loading) {
+            actionsBtns = (
+                <div className={styles.ActionsLoading}>
+                    <div className={styles.Bounce1}></div>
+                    <div className={styles.Bounce2}></div>
+                    <div className={styles.Bounce3}></div>
+                </div>
+            )
+        }
+        if(this.state.error) {
+            actionsBtns = (
+                <div className={styles.ActionBtns}>
+                    <p className={styles.ApiError}>Error while connecting to the server</p>
+                    <div className={styles.SaveDescriptionBtn} onClick={this.handleSaveClick}>Try again</div>
+                </div>
+            )
+        }
+
 
         let polygon = (
             <Polygon

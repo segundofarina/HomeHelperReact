@@ -152,3 +152,22 @@ textarea {
       transform: scale(1.0);
     }
 }
+
+
+.ApiError {
+    color: #d62a2a;
+    font-size: 12px;
+    font-style: italic;
+}
+
+
+.ValidationError input, .ValidationError select, .ValidationError textarea {
+    border: 1px solid #e21313!important;
+}
+
+.ValidationMsg {
+    color: #e21313;
+    font-size: 13px;
+    text-align: center;
+    font-style: italic;
+}

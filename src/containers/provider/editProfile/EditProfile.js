@@ -71,7 +71,9 @@ class EditProfile extends Component {
                                 serviceType={aptitude.serviceType}
                                 key={aptitude.serviceType.id}
                                 deletable={deletableAptitude}
-                                onAptitudeSave={this.handleSaveAptitude} />
+                                onAptitudeSave={this.handleSaveAptitude}
+                                id={aptitude.id}
+                                providerId={this.props.providerId} />
             )
         })
 
@@ -80,10 +82,11 @@ class EditProfile extends Component {
             newAptitude = (
                 <AptitudeEditor description=''
                                 posibleServiceTypes={remainingServiceTypes}
-                                serviceType={{value: null, name: ''}}
+                                serviceType={{value: '', name: ''}}
                                 new
                                 onCancel={this.handleNewAppointmentCancel}
-                                onAptitudeSave={this.handleSaveAptitude} />
+                                onAptitudeSave={this.handleSaveAptitude}
+                                providerId={this.props.providerId} />
             )
         }
 
@@ -91,14 +94,14 @@ class EditProfile extends Component {
             <div className={styles.EditProfile}>
                 <div className={styles.Content}>
                     <h2>Profile</h2>
-                    <DescriptionEditor description={this.props.provider.description} />
+                    <DescriptionEditor description={this.props.provider.description} providerId={this.props.providerId} />
                     <div className={styles.AptitudesTitle}>
                         <h3>Aptitudes</h3>
                         {remainingServiceTypes.length > 0 && <div className={styles.AddAptitudeBtn} onClick={this.addAptitude}>New Aptitude</div>}
                     </div>
                     {newAptitude}
                     {aptitudes}
-                    <WorkingZone coords={this.props.provider.coordenates} />
+                    <WorkingZone coords={this.props.provider.coordenates} providerId={this.props.providerId} />
                 </div>
             </div>
         )
